@@ -16,11 +16,20 @@ namespace Kolejki3.Logika
             ID = _ID;
             _ID++;
             }
+
+        public Zdarzenie(Zdarzenie zdarzenie)
+        {
+            CzasPrzyjscia = zdarzenie.CzasPrzyjscia;
+            CzasWykonywania = zdarzenie.CzasWykonywania;
+            CzasOpuszczenia = zdarzenie.CzasOpuszczenia;
+            ID = zdarzenie.ID;
+        }
         public double CzasPrzyjscia { get; set; }
         public double CzasWykonywania { get; set; }
         public double CzasOpuszczenia { get; set; }
 
         static private int _ID = 0;
+        private Zdarzenie zdarzenie;
 
         public int ID { get; set; }
         public void opuszczenieMaszyny() { }

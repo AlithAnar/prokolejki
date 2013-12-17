@@ -10,8 +10,9 @@ namespace Kolejki3.Logika
         {
         Queue<Zdarzenie> kolejka;
 
-        public FIFO()
+        public FIFO(int ms)
             {
+                MaxSize = ms;
             kolejka = new Queue<Zdarzenie>();
             }
 
@@ -19,21 +20,37 @@ namespace Kolejki3.Logika
             {
             if (isFull())
                 {
+                    Console.Out.WriteLine("kolejka jest pelna");
                 return false;
                 }
             kolejka.Enqueue(zdarzenie);
             CurrentSize++;
+            Console.Out.WriteLine("kolejka otrzymala " + zdarzenie.ID);
             return true;
-
             }
 
         public override Zdarzenie get()
             {
-            if (isEmpty()) return null;
+                if (isEmpty())
+                {
+                    Console.Out.WriteLine("kolejka jest pusta");
+                    return null;
+                }
             CurrentSize--;
-            return kolejka.Dequeue();
+            Zdarzenie pom = kolejka.Dequeue();
+            Console.Out.WriteLine("kolejka starcila " + pom.ID);
+            return pom;
             }
 
+        public override void print()
+        {
+            Console.Out.Write("kolejka ");
+            foreach ( Zdarzenie z in kolejka)
+            {
+                Console.Out.Write(z.ID+" ");
+            }
+            Console.Out.Write("\n");
+        }
 
         }
     }

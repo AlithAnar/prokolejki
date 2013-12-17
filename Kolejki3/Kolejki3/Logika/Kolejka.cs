@@ -6,14 +6,15 @@ using System.Threading.Tasks;
 
 namespace Kolejki3.Logika
     {
-    class Kolejka
+    abstract class Kolejka
         {
         public int MaxSize { get; set; }
         public int CurrentSize { get; set; }
 
-        public virtual bool put();
-
-        public virtual Zdarzenie get();
+        
+        public abstract bool put(Zdarzenie zdarzenie);
+        public abstract Zdarzenie get();
+        public abstract void print();
 
         public bool isEmpty()
             {
