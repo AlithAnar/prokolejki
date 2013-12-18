@@ -1,0 +1,9 @@
+C:\wiele_kolejek\trunk\Kolejki3\Kolejki3\bin\Debug\Kolejki3.exe.config
+C:\wiele_kolejek\trunk\Kolejki3\Kolejki3\obj\Debug\Kolejki3.csprojResolveAssemblyReference.cache
+C:\wiele_kolejek\trunk\Kolejki3\Kolejki3\obj\Debug\Kolejki3.Form1.resources
+C:\wiele_kolejek\trunk\Kolejki3\Kolejki3\obj\Debug\Kolejki3.Properties.Resources.resources
+C:\wiele_kolejek\trunk\Kolejki3\Kolejki3\obj\Debug\Kolejki3.csproj.GenerateResource.Cache
+C:\wiele_kolejek\trunk\Kolejki3\Kolejki3\bin\Debug\Kolejki3.exe
+C:\wiele_kolejek\trunk\Kolejki3\Kolejki3\bin\Debug\Kolejki3.pdb
+C:\wiele_kolejek\trunk\Kolejki3\Kolejki3\obj\Debug\Kolejki3.exe
+C:\wiele_kolejek\trunk\Kolejki3\Kolejki3\obj\Debug\Kolejki3.pdb
