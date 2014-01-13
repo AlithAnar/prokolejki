@@ -59,10 +59,28 @@
     <Compile Include="Logika\Modul.cs" />
     <Compile Include="Logika\Polaczenie.cs" />
     <Compile Include="Logika\Zdarzenie.cs" />
+    <Compile Include="ModulControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ModulControl.Designer.cs">
+      <DependentUpon>ModulControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ProbabForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProbabForm.Designer.cs">
+      <DependentUpon>ProbabForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ModulControl.resx">
+      <DependentUpon>ModulControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProbabForm.resx">
+      <DependentUpon>ProbabForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -1,49 +1,29 @@
-<<<<<<< HEAD
+
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Kolejki3.Logika
 {
-    class Polaczenie
+    public class Polaczenie
     {
-        public float chance { get; set; }
-        public Modul modulIn { get; set; }
-        public Modul modulOut { get; set; }
-
-        public Polaczenie (Modul modIn, Modul modOut, float percent)
+        public float Chance { get; set; }
+        public Modul ModulIn { get; set; }
+        public Modul ModulOut { get; set; }
+        public Point Point1 { get; set; }
+        public Point Point2 { get; set; }
+        public Polaczenie (Modul modIn, Modul modOut, float percent, Point p1, Point p2)
         {
-            modulIn = modIn;
-            modulOut = modOut;
-            chance = percent;
+            ModulIn = modIn;
+            ModulOut = modOut;
+            Chance = percent;
+            Point1 = p1;
+            Point2 = p2;
         }
         
     }
 }
-=======
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Kolejki3.Logika
-{
-    class Polaczenie
-    {
-        public float chance { get; set; }
-        public Modul modulIn { get; set; }
-        public Modul modulOut { get; set; }
-
-        public Polaczenie (Modul modIn, Modul modOut, float percent)
-        {
-            modulIn = modIn;
-            modulOut = modOut;
-            chance = percent;
-        }
-        
-    }
-}
->>>>>>> c5f2c03e813084c1da863e281b69f566a4e88c98

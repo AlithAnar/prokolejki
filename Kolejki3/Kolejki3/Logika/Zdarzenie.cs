@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace Kolejki3.Logika
     {
-    class Zdarzenie
+    public class Zdarzenie : IDisposable
         {
+
         public Zdarzenie(double cp)
             {
             CzasPrzyjscia = cp;
@@ -18,12 +19,12 @@ namespace Kolejki3.Logika
             }
 
         public Zdarzenie(Zdarzenie zdarzenie)
-        {
+            {
             CzasPrzyjscia = zdarzenie.CzasPrzyjscia;
             CzasWykonywania = zdarzenie.CzasWykonywania;
             CzasOpuszczenia = zdarzenie.CzasOpuszczenia;
             ID = zdarzenie.ID;
-        }
+            }
         public double CzasPrzyjscia { get; set; }
         public double CzasWykonywania { get; set; }
         public double CzasOpuszczenia { get; set; }
@@ -32,11 +33,19 @@ namespace Kolejki3.Logika
         private Zdarzenie zdarzenie;
 
         public int ID { get; set; }
-        public void opuszczenieMaszyny() { }
-        public void weszloNaMaszyne()        { }
+        public void opuszczenieMaszyny(List<Zdarzenie> lista)
+            {
+
+            lista.Add(this);
+            }
+        public void weszloNaMaszyne() { }
         public void weszloDoKolejki() { }
         public void weszloDoSieci() { }
         public void zeszloZSieci() { }
 
+        public void Dispose()
+            {
+            GC.SuppressFinalize(this);
+            }
         }
     }

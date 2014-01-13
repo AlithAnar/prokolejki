@@ -6,42 +6,44 @@ using System.Threading.Tasks;
 
 namespace Kolejki3.Logika
     {
-    class Maszyna
+    public class Maszyna
         {
-        private Zdarzenie zdarzenie {get; set; }
+        private Zdarzenie zdarzenie { get; set; }
         private bool empty = true;
 
         public Maszyna()
-        {
+            {
 
-        }
+            }
         public bool isEmpty()
-        {
-            if(empty == true) return true;
+            {
+            if (empty == true) return true;
             else return false;
-        }
+            }
 
         public Zdarzenie zdejmij()
-        {
-            Zdarzenie kopia = new Zdarzenie(zdarzenie);
-            zdarzenie = null;
-            empty = true;
-            Console.Out.WriteLine("zdjeto " + kopia.ID);
-            return kopia;
-        }
+            {
+            using (var kopia = new Zdarzenie(zdarzenie))
+                {
+                zdarzenie = null;
+                empty = true;
+                Console.Out.WriteLine("zdjeto " + kopia.ID);
+                return kopia;
+                }
+            }
 
-        public void poloz(Zdarzenie z) 
-        {
+        public void poloz(Zdarzenie z)
+            {
             zdarzenie = z;
             empty = false;
             Console.Out.WriteLine("polozono " + zdarzenie.ID);
-        }
-            
+            }
+
         public void print()
-        {
+            {
             if (isEmpty()) Console.Out.WriteLine("maszyna jest pusta");
             else Console.Out.WriteLine("maszyna " + zdarzenie.ID);
-        }
+            }
 
         }
     }

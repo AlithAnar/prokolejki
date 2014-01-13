@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace Kolejki3.Logika
     {
-    abstract class Kolejka
+    public abstract class Kolejka
         {
+
         public int MaxSize { get; set; }
         public int CurrentSize { get; set; }
 
@@ -15,6 +16,8 @@ namespace Kolejki3.Logika
         public abstract bool put(Zdarzenie zdarzenie);
         public abstract Zdarzenie get();
         public abstract void print();
+        public abstract string getRuleType();
+            
 
         public bool isEmpty()
             {
@@ -25,5 +28,7 @@ namespace Kolejki3.Logika
             {
             if (CurrentSize == MaxSize) return true; else return false;
             }
+
+
         }
     }
