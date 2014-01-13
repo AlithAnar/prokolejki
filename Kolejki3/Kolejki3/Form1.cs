@@ -17,13 +17,11 @@ namespace Kolejki3
         public List<Zdarzenie> listaZdarzen;
         private Point _lastPoint, _newPoint;
         private int _lastId = -1, _newId = -1;
-        ListaPolaczen listaPolaczen;
         public int SelectedModules { get; set; }
         public Form1()
             {
             InitializeComponent();
             listaModulow = new List<Modul>();
-            listaPolaczen = new ListaPolaczen();
             SelectedModules = 0;
             }
 
@@ -47,21 +45,38 @@ namespace Kolejki3
                         modul.ID = listaModulow.Count;
                         listaModulow.Add(modul);
                         ModulControl control = new ModulControl(modul);
-                        control.connector1.Click += addConnection;
-                        control.connector2.Click += addConnection;
-                        control.connector3.Click += addConnection;
-                        control.connector4.Click += addConnection;
+                        control.connector1.MouseDown += addConnection;
+                        control.connector2.MouseDown += addConnection;
+                        control.connector3.MouseDown += addConnection;
+                        control.connector4.MouseDown += addConnection;
                         control.MouseDown += ModulControl_MouseDown;
                         control.MouseMove += ModulControl_MouseMove;
                         control.MouseUp += ModulControl_MouseUp;
                         panelMain.Controls.Add(control);
+                        } break;
+                case 1:
+                        {
+                        k = new LIFO((int)numericUpDownQueueSize.Value);
+                        modul = new Modul(listaMaszyn, k);
+                        modul.ID = listaModulow.Count;
+                        listaModulow.Add(modul);
+                        ModulControl control = new ModulControl(modul);
+                        control.connector1.MouseDown += addConnection;
+                        control.connector2.MouseDown += addConnection;
+                        control.connector3.MouseDown += addConnection;
+                        control.connector4.MouseDown += addConnection;
+                        control.MouseDown += ModulControl_MouseDown;
+                        control.MouseMove += ModulControl_MouseMove;
+                        control.MouseUp += ModulControl_MouseUp;
+                        panelMain.Controls.Add(control);
+
                         } break;
                 }
             Invalidate();
 
             }
 
-        private void addConnection(object sender, EventArgs e)
+        private void addConnection(object sender, MouseEventArgs e)
             {
             SelectedModules++;
 
@@ -69,26 +84,27 @@ namespace Kolejki3
             ModulControl md = c.Parent as ModulControl;
             _lastId = _newId;
             _lastPoint = _newPoint;
-            _newPoint = panelMain.PointToScreen(c.Location);
+            _newPoint = md.Location;
             _newId = md.ID;
             if (SelectedModules == 2)
                 {
                 ProbabForm f = new ProbabForm();
                 if (f.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                     {
-                    listaPolaczen.Add(new Polaczenie(listaModulow.FirstOrDefault(x => x.ID == _lastId), listaModulow.FirstOrDefault(x => x.ID == _newId), f.Probability, _lastPoint, _newPoint));
-                    MessageBox.Show("Pomyślnie dodano połączenie");
+                    ListaPolaczen pol = new ListaPolaczen(new Polaczenie(listaModulow.FirstOrDefault(x => x.ID == _lastId), listaModulow.FirstOrDefault(x => x.ID == _newId), f.Probability, _lastPoint, _newPoint));
+                    listaModulow.FirstOrDefault(x => x.ID == _lastId).polaczenia = pol;
                     }
                 SelectedModules = 0;
                 }
-            //panelMain.Invalidate();
-            foreach (Polaczenie p in listaPolaczen)
+            foreach (Modul m in listaModulow)
                 {
-                Console.WriteLine(p.Point1.X + " " + p.Point1.Y + "\n" + p.Point2.X + " " + p.Point2.Y);
-                Graphics g = panelMain.CreateGraphics();
-                using (var pen = new Pen(Color.Blue, 2))
+                foreach (Polaczenie p in m.polaczenia ?? Enumerable.Empty<Polaczenie>())
                     {
-                    g.DrawLine(pen, p.Point1, p.Point2);
+                    Graphics g = panelMain.CreateGraphics();
+                    using (var pen = new Pen(Color.Blue, 2))
+                        {
+                        g.DrawLine(pen, p.Point1, p.Point2);
+                        }
                     }
                 }
             }

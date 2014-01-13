@@ -30,7 +30,7 @@ namespace Kolejki3
             label2.Text = "Dł. kolejki " + _modul.bufor.MaxSize;
             label3.Text = "W kolejce: ";
             label4.Text = "W maszynie: ";
-            label5.Text = "Reguła: " + _modul.bufor.GetType();
+            label5.Text = "Reguła: " + _modul.bufor.getRuleType();
             label6.Text = "M: ";
             labeId.Text = "ID: " + _modul.ID;
             }

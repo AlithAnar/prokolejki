@@ -9,15 +9,15 @@ namespace Kolejki3.Logika
     {
     public class ListaPolaczen : List<Polaczenie>
         {
-        public ListaPolaczen()
-            {
-
-            }
-
-        public void Dodaj(Polaczenie p)
+        public ListaPolaczen(Polaczenie p)
             {
             this.Add(p);
             }
+
+        //public void Dodaj(Polaczenie p)
+        //    {
+        //    this.Add(p);
+        //    }
 
         public Polaczenie wylosujPolaczenie()
             {
