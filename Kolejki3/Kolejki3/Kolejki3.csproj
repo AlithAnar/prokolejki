@@ -54,6 +54,7 @@
     <Compile Include="Logika\Engine.cs" />
     <Compile Include="Logika\FIFO.cs" />
     <Compile Include="Logika\Kolejka.cs" />
+    <Compile Include="Logika\Komunikat.cs" />
     <Compile Include="Logika\LIFO.cs" />
     <Compile Include="Logika\ListaMaszyn.cs" />
     <Compile Include="Logika\ListaPolaczen.cs" />

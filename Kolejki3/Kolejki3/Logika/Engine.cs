@@ -11,10 +11,10 @@ namespace Kolejki3.Logika
 
         List<Modul> listaModulow;
         public List<Zdarzenie> listaZdarzen;
-        List<String> listaWydarzen;
-        float engTime = 0;
+        List<Komunikat> listaWydarzen;
+        double engTime = 0;
 
-        public Engine(List<Modul> lm, List<Zdarzenie> lz, List<String> lw)
+        public Engine(List<Modul> lm, List<Zdarzenie> lz, List<Komunikat> lw)
         {
             this.listaModulow = lm;
             this.listaZdarzen = lz;
@@ -23,7 +23,7 @@ namespace Kolejki3.Logika
             if (lz == null)
                 this.listaZdarzen = new List<Zdarzenie>();
             if (lw == null)
-                this.listaWydarzen = new List<string>();
+                this.listaWydarzen = new List<Komunikat>();
         
 
         }
@@ -31,12 +31,12 @@ namespace Kolejki3.Logika
 
         internal void run(int stopTime)
         {
-            String wydarzenie;
-            Zdarzenie pierwsze;
+            Komunikat wydarzenie;
+            Zdarzenie zdarzenie;
 
             while (engTime < stopTime)
             {
-                engTime++;
+             //engTime++;
                 //wylosuj z-darzenie
                 //pobierz wy-darzenie z listy
                 //switch
@@ -45,21 +45,44 @@ namespace Kolejki3.Logika
                 //    wykonaj polecenie
                 //sort
 
+                
+
                 noweZdarzenie(listaZdarzen);
-                noweWydarzenie("weszło do systemu");
+                
 
                 wydarzenie = listaWydarzen.First();
-         
-                switch (wydarzenie)
+
+                zdarzenie = listaZdarzen.First();
+
+                engTime = wydarzenie.getRequestTime();
+
+                switch (wydarzenie.getRequestType())
                 {
-                    case "1":
+                    case "weszło do systemu":
+                        dodajDoSystemu(zdarzenie);
+                        
+                        break;
+                    case "weszło do maszyny":
+
+                        break;
+                    case "weszło do maszyny1":
+
+                        break;
+                    case "weszło do maszyny2":
+
+                        break;
+                    case "weszło do maszyny3":
+
+                        break;
+                    case "weszło do maszyny4":
+
                         break;
                     default:
                         break;
                 }
 
-                pierwsze = listaZdarzen.First();
-
+                
+/*
                 if (wydarzenie.Contains("weszło do systemu"))
                 {
                     dodajDoSystemu(pierwsze);
@@ -70,7 +93,7 @@ namespace Kolejki3.Logika
                     dodajDoSystemu(pierwsze);
                     noweWydarzenie("weszło do wyszło z maszyny 1");
                 }
-
+                */
                 Console.Out.WriteLine(engTime);
             }
         }
@@ -78,6 +101,7 @@ namespace Kolejki3.Logika
         private void dodajDoSystemu(Zdarzenie z)
         {
             znajdzPierwszyModul().putQueue(z);
+            noweWydarzenie("weszło do maszyny 1", z.ID);
         }
 
         private Modul znajdzPierwszyModul()
@@ -88,15 +112,16 @@ namespace Kolejki3.Logika
             return listaModulow.First();
         }
 
-        private void noweWydarzenie(String type)
+        private void noweWydarzenie(String type, int id)
         {
-            listaWydarzen.Add(engTime + ": " + type);
+            listaWydarzen.Add(new Komunikat(engTime, type, id));
         }
 
         private void noweZdarzenie(List<Zdarzenie> lz)
         {
             lz.Add(new Zdarzenie(0));
             lz.Last().wylosujCzas();
+            noweWydarzenie("weszło do systemu", lz.Last().ID);
         }
     }
 }

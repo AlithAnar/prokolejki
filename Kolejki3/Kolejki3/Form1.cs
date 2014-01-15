@@ -15,7 +15,7 @@ namespace Kolejki3
         {
         List<Modul> listaModulow;
         public List<Zdarzenie> listaZdarzen;
-        List<String> listaWydarzen;
+        List<Komunikat> listaWydarzen;
         Engine queuesEngine;
         private Point _lastPoint, _newPoint;
         private int _lastId = -1, _newId = -1;
@@ -168,7 +168,7 @@ namespace Kolejki3
             }
         }
 
-        private void startEngine(List<Modul> lm, List<Zdarzenie> lz, List<String> lw)
+        private void startEngine(List<Modul> lm, List<Zdarzenie> lz, List<Komunikat> lw)
         {
             queuesEngine = new Engine(lm, lz, lw);
 
