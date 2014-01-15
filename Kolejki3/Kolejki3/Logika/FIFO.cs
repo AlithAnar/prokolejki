@@ -8,44 +8,47 @@ namespace Kolejki3.Logika
     {
     class FIFO : Kolejka
         {
-        Queue<Zdarzenie> kolejka;
+        Queue<Zdarzenie> queueFIFO;
 
         public FIFO(int ms)
             {
             MaxSize = ms;
-            kolejka = new Queue<Zdarzenie>();
+            queueFIFO = new Queue<Zdarzenie>();
             }
 
-        public override bool put(Zdarzenie zdarzenie)
+        public override bool put(Zdarzenie ev)
             {
             if (isFull())
                 {
                 Console.Out.WriteLine("kolejka jest pelna");
                 return false;
                 }
-            kolejka.Enqueue(zdarzenie);
+            queueFIFO.Enqueue(ev);
             CurrentSize++;
-            Console.Out.WriteLine("kolejka otrzymala " + zdarzenie.ID);
+            Console.Out.WriteLine("kolejka otrzymala " + ev.ID);
             return true;
             }
 
         public override Zdarzenie get()
             {
+            
             if (isEmpty())
                 {
                 Console.Out.WriteLine("kolejka jest pusta");
                 return null;
                 }
+
+            Zdarzenie ev;
             CurrentSize--;
-            Zdarzenie pom = kolejka.Dequeue();
-            Console.Out.WriteLine("kolejka starcila " + pom.ID);
-            return pom;
+            ev = queueFIFO.Dequeue();
+            Console.Out.WriteLine("kolejka starcila " + ev.ID);
+            return ev;
             }
 
         public override void print()
             {
             Console.Out.Write("kolejka ");
-            foreach (Zdarzenie z in kolejka)
+            foreach (Zdarzenie z in queueFIFO)
                 {
                 Console.Out.Write(z.ID + " ");
                 }

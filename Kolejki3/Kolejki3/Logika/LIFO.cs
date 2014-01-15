@@ -8,23 +8,23 @@ namespace Kolejki3.Logika
     {
     public class LIFO : Kolejka
         {
-        Stack<Zdarzenie> kolejka;
+        Stack<Zdarzenie> queueLIFO;
         public LIFO(int ms)
             {
             MaxSize = ms;
-            kolejka = new Stack<Zdarzenie>();
+            queueLIFO = new Stack<Zdarzenie>();
             }
 
-        public override bool put(Zdarzenie zdarzenie)
+        public override bool put(Zdarzenie ev)
             {
             if (isFull())
                 {
                 Console.Out.WriteLine("kolejka jest pelna");
                 return false;
                 }
-            kolejka.Push(zdarzenie);
+            queueLIFO.Push(ev);
             CurrentSize++;
-            Console.Out.WriteLine("kolejka otrzymala " + zdarzenie.ID);
+            Console.Out.WriteLine("kolejka otrzymala " + ev.ID);
             return true;
             }
 
@@ -35,16 +35,18 @@ namespace Kolejki3.Logika
                 Console.Out.WriteLine("kolejka jest pusta");
                 return null;
                 }
+
+            Zdarzenie ev;
             CurrentSize--;
-            Zdarzenie pom = kolejka.Pop();
-            Console.Out.WriteLine("kolejka starcila " + pom.ID);
-            return pom;
+            ev = queueLIFO.Pop();
+            Console.Out.WriteLine("kolejka starcila " + ev.ID);
+            return ev;
             }
 
         public override void print()
             {
             Console.Out.Write("kolejka ");
-            foreach (Zdarzenie z in kolejka)
+            foreach (Zdarzenie z in queueLIFO)
                 {
                 Console.Out.Write(z.ID + " ");
                 }

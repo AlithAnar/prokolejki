@@ -10,64 +10,59 @@ namespace Kolejki3.Logika
     class Engine
     {
 
-        List<Modul> listaModulow;
-        public List<Zdarzenie> listaZdarzen;
-        List<Komunikat> listaWydarzen;
-        double engTime = 0;
-        float m; 
+        List<Modul> listModules;
+        public List<Zdarzenie> listEvents;
+        List<Komunikat> listRequest;
+        double engTime;
+        float M; 
         public bool Simulating;
 
         public Engine(List<Modul> lm, List<Zdarzenie> lz, List<Komunikat> lw, float m)
         {
-            this.listaModulow = lm;
-            this.listaZdarzen = lz;
-            this.listaWydarzen = lw;
-            this.m = m;
+            this.listModules = lm;
+            this.listEvents = lz;
+            this.listRequest = lw;
+            this.M = m;
             Simulating = false;
             if (lz == null)
-                this.listaZdarzen = new List<Zdarzenie>();
+                this.listEvents = new List<Zdarzenie>();
             if (lw == null)
-                this.listaWydarzen = new List<Komunikat>();
-        
-
+                this.listRequest = new List<Komunikat>();
         }
 
         internal void run(int stopTime)
         {
-            Komunikat wydarzenie;
-            Zdarzenie zdarzenie;
+            Komunikat helpyRequest;
+            Zdarzenie helpyEvent;
+            engTime = 0;
 
             while (engTime < stopTime)
             {
-                noweZdarzenie(listaZdarzen);
+                newRandomEvent(listEvents);
 
-                wydarzenie = listaWydarzen.First();
+                helpyRequest = listRequest.First();
+                
+                helpyEvent = findRequestById(listEvents, helpyRequest.getRequestId());
 
-                zdarzenie = findRequestById(listaZdarzen, wydarzenie.getRequestId());
+                engTime = helpyRequest.getRequestTime();
 
-                engTime = wydarzenie.getRequestTime();
+                systemResponse(helpyRequest, helpyEvent);
+                
+                listRequest.RemoveAt(0);
 
-                systemResponse(wydarzenie, zdarzenie);
-                /*
-                 * listaWydarzen.Sort(); //   <-- To dla mnie
-                 *
-                 * http://msdn.microsoft.com/pl-pl/library/w56d4y5z(v=vs.110).aspx
-                 * nazwy na angielski
-                 * ładne metody
-                 */
+                listRequest.Sort(CompareRequestsById);
 
                 Console.Out.WriteLine(engTime);
                // Thread.Sleep(1000);
             }
         }
 
-        private void systemResponse(Komunikat wydarzenie, Zdarzenie zdarzenie)
+        private void systemResponse(Komunikat helpyRequest, Zdarzenie helpyEvent)
         {
-            switch (wydarzenie.getRequestType())
+            switch (helpyRequest.getRequestType())
             {
                 case "weszło do systemu":
-                    dodajDoSystemu(zdarzenie);
-
+                    weszloDoSystemu(helpyEvent);
                     break;
                 case "zeszło z systemu":
 
@@ -89,30 +84,31 @@ namespace Kolejki3.Logika
             }
         }
 
-        private void dodajDoSystemu(Zdarzenie z)
+        private void weszloDoSystemu(Zdarzenie z)
         {
-            znajdzPierwszyModul().putQueue(z);
-            noweWydarzenie("weszło do maszyny 1", z.ID);
+            findFirstModule().putOnQueue(z);
+            newRequest(engTime, "weszło do maszyny 1", z.ID);
         }
 
-        private Modul znajdzPierwszyModul()
+        private Modul findFirstModule()
         {
-            foreach (Modul m in listaModulow)
-                if (m.ID == 1)
+            foreach (Modul m in listModules)
+                if (m.ID == 0)
                     return m;
-            return listaModulow.First();
+            return listModules.First();
         }
 
-        private void noweWydarzenie(String type, int id)
+        private void newRequest(double time, string type, int id)
         {
-            listaWydarzen.Add(new Komunikat(engTime, type, id));
+            listRequest.Add(new Komunikat(time, type, id));
         }
 
-        private void noweZdarzenie(List<Zdarzenie> lz)
+        private void newRandomEvent(List<Zdarzenie> lz)
         {
             lz.Add(new Zdarzenie(0));
-            lz.Last().wylosujCzas();
-            noweWydarzenie("weszło do systemu", lz.Last().ID);
+            lz.Last().randomIncomingTime(M);
+            lz.Last().timeIncoming += engTime;
+            newRequest(lz.Last().timeIncoming, "weszło do systemu", lz.Last().ID);
         }
 
         private Zdarzenie findRequestById(List<Zdarzenie> lz, int id)
@@ -122,5 +118,12 @@ namespace Kolejki3.Logika
                     return z;
             return lz.First();
         }
+
+
+        private static int CompareRequestsById(Komunikat x, Komunikat y)
+        {
+            return x.getRequestTime().CompareTo(y.getRequestTime());
+        }
+
     }
 }

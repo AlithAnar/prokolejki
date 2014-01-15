@@ -23,6 +23,7 @@ namespace Kolejki3.Logika
 
         public double getRequestTime()
         {
+            Console.Out.WriteLine("time: " + requestTime + " " + requestType);
             return requestTime;
         }
         

@@ -114,14 +114,14 @@ namespace Kolejki3
                 if (f.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                     {
                     Modul m = listaModulow.FirstOrDefault(x => x.ID == _lastId);
-                    if (m.polaczenia == null)
+                    if (m.listConnections == null)
                         {
                         ListaPolaczen pol = new ListaPolaczen(new Polaczenie(listaModulow.FirstOrDefault(x => x.ID == _lastId), listaModulow.FirstOrDefault(x => x.ID == _newId), f.Probability, _lastPoint, _newPoint));
-                        m.polaczenia = pol;
+                        m.listConnections = pol;
                         }
                     else
                         {
-                        m.polaczenia.Add(new Polaczenie(listaModulow.FirstOrDefault(x => x.ID == _lastId), listaModulow.FirstOrDefault(x => x.ID == _newId), f.Probability, _lastPoint, _newPoint));
+                        m.listConnections.Add(new Polaczenie(listaModulow.FirstOrDefault(x => x.ID == _lastId), listaModulow.FirstOrDefault(x => x.ID == _newId), f.Probability, _lastPoint, _newPoint));
                         }
 
                     }
@@ -130,7 +130,7 @@ namespace Kolejki3
             listBox1.Items.Clear();
             foreach (Modul m in listaModulow)
                 {
-                foreach (Polaczenie p in m.polaczenia ?? Enumerable.Empty<Polaczenie>())
+                foreach (Polaczenie p in m.listConnections ?? Enumerable.Empty<Polaczenie>())
                     {
                     listBox1.Items.Add("M: " + p.ModulIn.ID + " M: " + p.ModulOut.ID);
                     Graphics g = panelMain.CreateGraphics();

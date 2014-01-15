@@ -10,46 +10,44 @@ namespace Kolejki3.Logika
     public class Modul
     {
         static private int _ID = 0;
-        public ListaMaszyn maszyny;
-        public Kolejka bufor;
-        public ListaPolaczen polaczenia;
+        public ListaMaszyn machins;
+        public Kolejka buffer;
+        public ListaPolaczen listConnections;
         public int ID { get ; set; }
 
         public Modul() { }
         public Modul (Maszyna m, Kolejka k)
         {
-            maszyny = new ListaMaszyn();
-            maszyny.Add(m);
-            bufor = k;
+            machins = new ListaMaszyn();
+            machins.Add(m);
+            buffer = k;
             ID = _ID;
-            //_ID++;
         }
 
         public Modul(ListaMaszyn lm, Kolejka k)
         {
-            maszyny = lm;
-            bufor = k;
-            //_ID++;
+            machins = lm;
+            buffer = k;
         }
 
         public bool isFull()
         {
-            if (bufor.isFull()) return true;
+            if (buffer.isFull()) return true;
             else return false;
         }
 
-        public void putQueue(Zdarzenie z)
+        public void putOnQueue(Zdarzenie z)
         {
             Console.Out.Write("modul " + ID + " ");
-            bufor.put(z);
-            if (maszyny.isFree())
-                maszyny.freeMachine().poloz(bufor.get());
+            buffer.put(z);
+            if (machins.isFree())
+                machins.freeMachine().put(buffer.get());
         }
 
-        public Zdarzenie outMachine(int nr)
+        public Zdarzenie getFromMachine(int nr)
         {
             Console.Out.Write("modul " + ID + " ");
-            Zdarzenie z = maszyny[nr].zdejmij();
+            Zdarzenie z = machins[nr].get();
             return z;
         }
     }

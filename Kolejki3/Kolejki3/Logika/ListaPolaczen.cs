@@ -14,19 +14,12 @@ namespace Kolejki3.Logika
             this.Add(p);
             }
 
-        //public void Dodaj(Polaczenie p)
-        //    {
-        //    this.Add(p);
-        //    }
-
-        public Polaczenie wylosujPolaczenie()
+        public Polaczenie randomConnection()
             {
             Random r = new Random();
             foreach (Polaczenie pp in this)
-                {
                 if (pp.Chance <= r.NextDouble())
                     return pp;
-                }
             return this[0];
             }
         }

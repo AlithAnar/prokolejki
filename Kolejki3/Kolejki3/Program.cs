@@ -25,7 +25,7 @@ namespace Kolejki3.Logika
         //    Maszyna m2 = new Maszyna();
         //    Kolejka ko2 = new FIFO(3);
         //    sec = new Modul(m2, ko2);
-        //    Polaczenie pol = new Polaczenie(first, sec, 1);
+        //    Polaczenie pol = new Polaczenie(first, sec, 1);4
         //    ListaPolaczen lp = new ListaPolaczen(pol);
         //    first.polaczenia = lp;
 

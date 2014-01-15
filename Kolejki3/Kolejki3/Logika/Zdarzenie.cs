@@ -6,8 +6,17 @@ using System.Threading.Tasks;
 
 namespace Kolejki3.Logika
     {
-    public class Zdarzenie //: IDisposable
+    public class Zdarzenie
         {
+        public double timeIncoming { get; set; }
+        //public double time { get; set; }
+        public double timeLeaving { get; set; }
+
+        static private int _ID = 0;
+        public int ID { get; set; }
+        Random randomGenerator = new Random();
+
+       // private Zdarzenie ev;
 
         public Zdarzenie()
         {
@@ -17,58 +26,44 @@ namespace Kolejki3.Logika
 
         public Zdarzenie(double cp)
             {
-            CzasPrzyjscia = cp;
-            CzasWykonywania = 0;
-            CzasOpuszczenia = 0;
+            timeIncoming = cp;
+           // CzasWykonywania = 0;
+            timeLeaving = 0;
             ID = _ID;
             _ID++;
             }
 
-        public Zdarzenie(Zdarzenie zdarzenie)
+        public Zdarzenie(Zdarzenie ev)
             {
-            CzasPrzyjscia = zdarzenie.CzasPrzyjscia;
-            CzasWykonywania = zdarzenie.CzasWykonywania;
-            CzasOpuszczenia = zdarzenie.CzasOpuszczenia;
-            ID = zdarzenie.ID;
+            timeIncoming = ev.timeIncoming;
+            //CzasWykonywania = zdarzenie.CzasWykonywania;
+            timeLeaving = ev.timeLeaving;
+            ID = ev.ID;
             }
-        public double CzasPrzyjscia { get; set; }
-        public double CzasWykonywania { get; set; }
-        public double CzasOpuszczenia { get; set; }
-
-        static private int _ID = 0;
-        private Zdarzenie zdarzenie;
-
-        public int ID { get; set; }
-        public void opuszczenieMaszyny(List<Zdarzenie> lista)
+        
+        public void getFromMachine(List<Zdarzenie> le)
             {
-
-            lista.Add(this);
-            }
-        public void weszloNaMaszyne() { }
-        public void weszloDoKolejki() { }
-        public void weszloDoSieci() { }
-        public void zeszloZSieci() { }
-
-        public void Dispose()
-            {
-            GC.SuppressFinalize(this);
+            le.Add(this);
             }
 
-
-        Random randomGenerator = new Random();
-
-        private double losuj(double alfa)
+        private double random(double alfa)
         {
             double x = randomGenerator.NextDouble();
             return -(1 / alfa) * Math.Log(1 - x);
         }
 
-        public double wylosujCzas() 
+        public double randomIncomingTime(double alfa) 
             {
-                CzasPrzyjscia = losuj(60);
-                return CzasPrzyjscia;
+                timeIncoming = random(alfa);
+                return timeIncoming;
             }
-        }
 
-        
+
+
+        public void weszloNaMaszyne() { }
+        public void weszloDoKolejki() { }
+        public void weszloDoSieci() { }
+        public void zeszloZSieci() { }
+
+        }
     }
