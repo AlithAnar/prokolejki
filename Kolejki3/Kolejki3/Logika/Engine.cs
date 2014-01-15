@@ -14,7 +14,7 @@ namespace Kolejki3.Logika
         public List<Zdarzenie> listaZdarzen;
         List<Komunikat> listaWydarzen;
         double engTime = 0;
-        float m;
+        float m; 
         public bool Simulating;
 
         public Engine(List<Modul> lm, List<Zdarzenie> lz, List<Komunikat> lw, float m)
