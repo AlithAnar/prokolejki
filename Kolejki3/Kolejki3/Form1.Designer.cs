@@ -48,6 +48,9 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.button2 = new System.Windows.Forms.Button();
+            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -74,7 +77,7 @@
             // akcjeBox
             // 
             this.akcjeBox.FormattingEnabled = true;
-            this.akcjeBox.Location = new System.Drawing.Point(568, 38);
+            this.akcjeBox.Location = new System.Drawing.Point(781, 38);
             this.akcjeBox.Name = "akcjeBox";
             this.akcjeBox.Size = new System.Drawing.Size(203, 524);
             this.akcjeBox.TabIndex = 4;
@@ -86,7 +89,7 @@
             this.plikToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(783, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(996, 24);
             this.menuStrip1.TabIndex = 7;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -122,10 +125,11 @@
             // 
             this.panelMain.AllowDrop = true;
             this.panelMain.BackColor = System.Drawing.Color.Linen;
-            this.panelMain.Location = new System.Drawing.Point(12, 177);
+            this.panelMain.Location = new System.Drawing.Point(271, 177);
             this.panelMain.Name = "panelMain";
-            this.panelMain.Size = new System.Drawing.Size(537, 385);
+            this.panelMain.Size = new System.Drawing.Size(489, 385);
             this.panelMain.TabIndex = 8;
+            this.panelMain.Paint += new System.Windows.Forms.PaintEventHandler(this.panelMain_Paint);
             // 
             // button1
             // 
@@ -235,11 +239,41 @@
             this.label3.TabIndex = 8;
             this.label3.Text = "Typ:";
             // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(28, 132);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 12;
+            this.button2.Text = "Start";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.simStart);
+            // 
+            // listBox1
+            // 
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.Location = new System.Drawing.Point(12, 203);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(223, 355);
+            this.listBox1.TabIndex = 13;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(12, 187);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(59, 13);
+            this.label2.TabIndex = 14;
+            this.label2.Text = "Polaczenia";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(783, 580);
+            this.ClientSize = new System.Drawing.Size(996, 580);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.listBox1);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.button1);
@@ -284,6 +318,9 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.Label label2;
         }
     }
 

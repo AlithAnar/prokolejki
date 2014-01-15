@@ -25,6 +25,10 @@ namespace Kolejki3
             SelectedModules = 0;
             }
 
+        private void simStart(object sender, EventArgs e)
+            {
+            }
+
         private void createModule(object sender, EventArgs e)
             {
             if (!((int)numericUpDownMachineCount.Value > 0) || comboBoxTypes.SelectedIndex.Equals(-1) || !((int)numericUpDownQueueSize.Value > 0)) return;
@@ -91,15 +95,26 @@ namespace Kolejki3
                 ProbabForm f = new ProbabForm();
                 if (f.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                     {
-                    ListaPolaczen pol = new ListaPolaczen(new Polaczenie(listaModulow.FirstOrDefault(x => x.ID == _lastId), listaModulow.FirstOrDefault(x => x.ID == _newId), f.Probability, _lastPoint, _newPoint));
-                    listaModulow.FirstOrDefault(x => x.ID == _lastId).polaczenia = pol;
+                    Modul m = listaModulow.FirstOrDefault(x => x.ID == _lastId);
+                    if (m.polaczenia == null)
+                        {
+                        ListaPolaczen pol = new ListaPolaczen(new Polaczenie(listaModulow.FirstOrDefault(x => x.ID == _lastId), listaModulow.FirstOrDefault(x => x.ID == _newId), f.Probability, _lastPoint, _newPoint));
+                        m.polaczenia = pol;
+                        }
+                    else
+                        {
+                        m.polaczenia.Add(new Polaczenie(listaModulow.FirstOrDefault(x => x.ID == _lastId), listaModulow.FirstOrDefault(x => x.ID == _newId), f.Probability, _lastPoint, _newPoint));
+                        }
+
                     }
                 SelectedModules = 0;
                 }
+            listBox1.Items.Clear();
             foreach (Modul m in listaModulow)
                 {
                 foreach (Polaczenie p in m.polaczenia ?? Enumerable.Empty<Polaczenie>())
                     {
+                    listBox1.Items.Add("M: " + p.ModulIn.ID + " M: " + p.ModulOut.ID);
                     Graphics g = panelMain.CreateGraphics();
                     using (var pen = new Pen(Color.Blue, 2))
                         {
@@ -130,6 +145,13 @@ namespace Kolejki3
                 c.Location = new Point(c.Location.X + (e.X - _lastPoint.X), c.Location.Y + (e.Y - _lastPoint.Y));
                 }
             }
+
+        private void panelMain_Paint(object sender, PaintEventArgs e)
+            {
+
+            }
+
+
 
 
 
