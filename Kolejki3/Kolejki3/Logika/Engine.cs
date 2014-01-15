@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Kolejki3.Logika
@@ -12,14 +13,16 @@ namespace Kolejki3.Logika
         List<Modul> listaModulow;
         public List<Zdarzenie> listaZdarzen;
         List<String> listaWydarzen;
-        float engTime = 0;
+        float engTime = 0, m = 0;
+        public bool Simulating { get; set; }
 
-        public Engine(List<Modul> lm, List<Zdarzenie> lz, List<String> lw)
+        public Engine(List<Modul> lm, List<Zdarzenie> lz, List<String> lw, float m)
         {
             this.listaModulow = lm;
             this.listaZdarzen = lz;
             this.listaWydarzen = lw;
-
+            this.m = m;
+            Simulating = false;
             if (lz == null)
                 this.listaZdarzen = new List<Zdarzenie>();
             if (lw == null)
@@ -72,6 +75,11 @@ namespace Kolejki3.Logika
                 }
 
                 Console.Out.WriteLine(engTime);
+                Thread.Sleep(1000);
+                
+
+
+                
             }
         }
 

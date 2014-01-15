@@ -20,6 +20,7 @@ namespace Kolejki3
                 {
                 return _modul.ID;
                 }
+
             }
         public ModulControl(Modul modul)
             {
