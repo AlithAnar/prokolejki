@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Kolejki3.Logika
@@ -13,13 +14,16 @@ namespace Kolejki3.Logika
         public List<Zdarzenie> listaZdarzen;
         List<Komunikat> listaWydarzen;
         double engTime = 0;
+        float m;
+        public bool Simulating;
 
-        public Engine(List<Modul> lm, List<Zdarzenie> lz, List<Komunikat> lw)
+        public Engine(List<Modul> lm, List<Zdarzenie> lz, List<Komunikat> lw, float m)
         {
             this.listaModulow = lm;
             this.listaZdarzen = lz;
             this.listaWydarzen = lw;
-
+            this.m = m;
+            Simulating = false;
             if (lz == null)
                 this.listaZdarzen = new List<Zdarzenie>();
             if (lw == null)
@@ -48,10 +52,10 @@ namespace Kolejki3.Logika
                 
 
                 noweZdarzenie(listaZdarzen);
-                
+
 
                 wydarzenie = listaWydarzen.First();
-
+         
                 zdarzenie = listaZdarzen.First();
 
                 engTime = wydarzenie.getRequestTime();
@@ -81,7 +85,7 @@ namespace Kolejki3.Logika
                         break;
                 }
 
-                
+
 /*
                 if (wydarzenie.Contains("weszło do systemu"))
                 {
@@ -95,6 +99,11 @@ namespace Kolejki3.Logika
                 }
                 */
                 Console.Out.WriteLine(engTime);
+                Thread.Sleep(1000);
+                
+
+
+                
             }
         }
 

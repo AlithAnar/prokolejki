@@ -13,7 +13,7 @@ namespace Kolejki3.Logika
         public ListaMaszyn maszyny;
         public Kolejka bufor;
         public ListaPolaczen polaczenia;
-        public int ID { get { return _ID; } set { _ID = value; } }
+        public int ID { get ; set; }
 
         public Modul() { }
         public Modul (Maszyna m, Kolejka k)
@@ -22,14 +22,14 @@ namespace Kolejki3.Logika
             maszyny.Add(m);
             bufor = k;
             ID = _ID;
-            _ID++;
+            //_ID++;
         }
 
         public Modul(ListaMaszyn lm, Kolejka k)
         {
             maszyny = lm;
             bufor = k;
-            _ID++;
+            //_ID++;
         }
 
         public bool isFull()

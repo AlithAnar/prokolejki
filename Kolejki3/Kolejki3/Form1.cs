@@ -33,7 +33,17 @@ namespace Kolejki3
 
         private void simStart(object sender, EventArgs e)
             {
+            Console.Out.WriteLine("logi:");
                
+            if (queuesEngine != null && queuesEngine.Simulating == true)
+                {
+                queuesEngine.Simulating = false;
+            }
+            if (listaModulow.Count > 0)
+                {
+                startEngine(listaModulow, listaZdarzen, listaWydarzen);
+                queuesEngine.Simulating = true;
+                }
             }
 
         private void createModule(object sender, EventArgs e)
@@ -56,10 +66,6 @@ namespace Kolejki3
                         modul.ID = listaModulow.Count;
                         listaModulow.Add(modul);
                         ModulControl control = new ModulControl(modul);
-                        control.connector1.MouseDown += addConnection;
-                        control.connector2.MouseDown += addConnection;
-                        control.connector3.MouseDown += addConnection;
-                        control.connector4.MouseDown += addConnection;
                         control.MouseDown += ModulControl_MouseDown;
                         control.MouseMove += ModulControl_MouseMove;
                         control.MouseUp += ModulControl_MouseUp;
@@ -72,10 +78,6 @@ namespace Kolejki3
                         modul.ID = listaModulow.Count;
                         listaModulow.Add(modul);
                         ModulControl control = new ModulControl(modul);
-                        control.connector1.MouseDown += addConnection;
-                        control.connector2.MouseDown += addConnection;
-                        control.connector3.MouseDown += addConnection;
-                        control.connector4.MouseDown += addConnection;
                         control.MouseDown += ModulControl_MouseDown;
                         control.MouseMove += ModulControl_MouseMove;
                         control.MouseUp += ModulControl_MouseUp;
@@ -83,20 +85,29 @@ namespace Kolejki3
 
                         } break;
                 }
+            Console.WriteLine();
+                
             Invalidate();
 
             }
 
-        private void addConnection(object sender, MouseEventArgs e)
+        private void ModulControl_MouseDown(object sender, MouseEventArgs e)
+            {
+            _lastPoint = e.Location;
+            Control c = sender as Control;
+            c.Cursor = Cursors.SizeAll;
+            if (e.Button == System.Windows.Forms.MouseButtons.Right)
             {
             SelectedModules++;
 
-            Control c = sender as Control;
-            ModulControl md = c.Parent as ModulControl;
+                
+                ModulControl md = sender as ModulControl;
             _lastId = _newId;
             _lastPoint = _newPoint;
             _newPoint = md.Location;
             _newId = md.ID;
+              
+
             if (SelectedModules == 2)
                 {
                 ProbabForm f = new ProbabForm();
@@ -130,12 +141,6 @@ namespace Kolejki3
                     }
                 }
             }
-
-        private void ModulControl_MouseDown(object sender, MouseEventArgs e)
-            {
-            _lastPoint = e.Location;
-            Control c = sender as Control;
-            c.Cursor = Cursors.SizeAll;
             }
 
         private void ModulControl_MouseUp(object sender, MouseEventArgs e)
@@ -153,24 +158,14 @@ namespace Kolejki3
                 }
             }
 
-        private void panelMain_Paint(object sender, PaintEventArgs e)
-            {
-
-            }
-
         private void button2_MouseClick(object sender, MouseEventArgs e)
         {
-            Console.Out.WriteLine("logi:");
 
-            if (listaModulow.Count > 0)
-            {
-                startEngine(listaModulow, listaZdarzen, listaWydarzen);
-            }
         }
 
         private void startEngine(List<Modul> lm, List<Zdarzenie> lz, List<Komunikat> lw)
         {
-            queuesEngine = new Engine(lm, lz, lw);
+            queuesEngine = new Engine(lm, lz, lw , float.Parse(textBoxMi.Text));
 
             
             if (pomButtonClickCount < 1)
