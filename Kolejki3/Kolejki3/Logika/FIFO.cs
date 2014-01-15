@@ -49,7 +49,7 @@ namespace Kolejki3.Logika
             {
             Console.Out.Write("kolejka ");
             foreach (Zdarzenie z in queueFIFO)
-                {
+                { 
                 Console.Out.Write(z.ID + " ");
                 }
             Console.Out.Write("\n");
