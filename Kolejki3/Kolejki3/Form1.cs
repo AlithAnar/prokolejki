@@ -15,8 +15,14 @@ namespace Kolejki3
         {
         List<Modul> listaModulow;
         public List<Zdarzenie> listaZdarzen;
+        List<String> listaWydarzen;
+        Engine queuesEngine;
         private Point _lastPoint, _newPoint;
         private int _lastId = -1, _newId = -1;
+
+        private int pomButtonClickCount = 0;
+
+
         public int SelectedModules { get; set; }
         public Form1()
             {
@@ -27,6 +33,7 @@ namespace Kolejki3
 
         private void simStart(object sender, EventArgs e)
             {
+               
             }
 
         private void createModule(object sender, EventArgs e)
@@ -150,6 +157,30 @@ namespace Kolejki3
             {
 
             }
+
+        private void button2_MouseClick(object sender, MouseEventArgs e)
+        {
+            Console.Out.WriteLine("logi:");
+
+            if (listaModulow.Count > 0)
+            {
+                startEngine(listaModulow, listaZdarzen, listaWydarzen);
+            }
+        }
+
+        private void startEngine(List<Modul> lm, List<Zdarzenie> lz, List<String> lw)
+        {
+            queuesEngine = new Engine(lm, lz, lw);
+
+            
+            if (pomButtonClickCount < 1)
+            {
+                queuesEngine.run(3);
+            }
+            
+            pomButtonClickCount++;
+            Console.Out.WriteLine("count: " + pomButtonClickCount);
+        }
 
 
 

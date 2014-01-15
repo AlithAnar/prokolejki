@@ -6,8 +6,14 @@ using System.Threading.Tasks;
 
 namespace Kolejki3.Logika
     {
-    public class Zdarzenie : IDisposable
+    public class Zdarzenie //: IDisposable
         {
+
+        public Zdarzenie()
+        {
+            ID = _ID;
+            _ID++;
+        }
 
         public Zdarzenie(double cp)
             {
@@ -47,5 +53,22 @@ namespace Kolejki3.Logika
             {
             GC.SuppressFinalize(this);
             }
+
+
+        Random randomGenerator = new Random();
+
+        private double losuj(double alfa)
+        {
+            double x = randomGenerator.NextDouble();
+            return -(1 / alfa) * Math.Log(1 - x);
         }
+
+        public double wylosujCzas() 
+            {
+                CzasPrzyjscia = losuj(60);
+                return CzasPrzyjscia;
+            }
+        }
+
+        
     }

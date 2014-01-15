@@ -23,13 +23,20 @@ namespace Kolejki3.Logika
 
         public Zdarzenie zdejmij()
             {
-            using (var kopia = new Zdarzenie(zdarzenie))
+            /*using (var kopia = new Zdarzenie(zdarzenie))
                 {
                 zdarzenie = null;
                 empty = true;
                 Console.Out.WriteLine("zdjeto " + kopia.ID);
                 return kopia;
-                }
+                }*/
+
+                Zdarzenie kopia = new Zdarzenie(zdarzenie);
+                zdarzenie = null;
+                empty = true;
+                Console.Out.WriteLine("zdjeto " + kopia.ID);
+                return kopia;
+
             }
 
         public void poloz(Zdarzenie z)

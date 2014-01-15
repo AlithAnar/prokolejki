@@ -51,6 +51,7 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Logika\Engine.cs" />
     <Compile Include="Logika\FIFO.cs" />
     <Compile Include="Logika\Kolejka.cs" />
     <Compile Include="Logika\LIFO.cs" />
