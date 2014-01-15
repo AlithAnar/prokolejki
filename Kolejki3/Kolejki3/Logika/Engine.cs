@@ -66,19 +66,19 @@ namespace Kolejki3.Logika
                         dodajDoSystemu(zdarzenie);
                         
                         break;
+                    case "zeszło z systemu":
+
+                        break;
                     case "weszło do maszyny":
 
                         break;
-                    case "weszło do maszyny1":
+                    case "zeszło z maszyny":
 
                         break;
-                    case "weszło do maszyny2":
+                    case "weszło do bufora":
 
                         break;
-                    case "weszło do maszyny3":
-
-                        break;
-                    case "weszło do maszyny4":
+                    case "zeszło z bufora":
 
                         break;
                     default:
