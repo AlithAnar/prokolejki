@@ -32,7 +32,6 @@ namespace Kolejki3.Logika
 
         }
 
-
         internal void run(int stopTime)
         {
             Komunikat wydarzenie;
@@ -40,70 +39,53 @@ namespace Kolejki3.Logika
 
             while (engTime < stopTime)
             {
-             //engTime++;
-                //wylosuj z-darzenie
-                //pobierz wy-darzenie z listy
-                //switch
-                //  case
-                //    dodaj czas wydarzenia + opis
-                //    wykonaj polecenie
-                //sort
-
-                
-
                 noweZdarzenie(listaZdarzen);
 
-
                 wydarzenie = listaWydarzen.First();
-         
-                zdarzenie = listaZdarzen.First();
+
+                zdarzenie = findRequestById(listaZdarzen, wydarzenie.getRequestId());
 
                 engTime = wydarzenie.getRequestTime();
 
-                switch (wydarzenie.getRequestType())
-                {
-                    case "weszło do systemu":
-                        dodajDoSystemu(zdarzenie);
-                        
-                        break;
-                    case "zeszło z systemu":
+                systemResponse(wydarzenie, zdarzenie);
+                /*
+                 * listaWydarzen.Sort(); //   <-- To dla mnie
+                 *
+                 * http://msdn.microsoft.com/pl-pl/library/w56d4y5z(v=vs.110).aspx
+                 * nazwy na angielski
+                 * ładne metody
+                 */
 
-                        break;
-                    case "weszło do maszyny":
-
-                        break;
-                    case "zeszło z maszyny":
-
-                        break;
-                    case "weszło do bufora":
-
-                        break;
-                    case "zeszło z bufora":
-
-                        break;
-                    default:
-                        break;
-                }
-
-
-/*
-                if (wydarzenie.Contains("weszło do systemu"))
-                {
-                    dodajDoSystemu(pierwsze);
-                    noweWydarzenie("weszło do maszyny 1");
-                }
-                if (wydarzenie.Contains("weszło do maszyny"))
-                {
-                    dodajDoSystemu(pierwsze);
-                    noweWydarzenie("weszło do wyszło z maszyny 1");
-                }
-                */
                 Console.Out.WriteLine(engTime);
-                Thread.Sleep(1000);
-                
+               // Thread.Sleep(1000);
+            }
+        }
 
+        private void systemResponse(Komunikat wydarzenie, Zdarzenie zdarzenie)
+        {
+            switch (wydarzenie.getRequestType())
+            {
+                case "weszło do systemu":
+                    dodajDoSystemu(zdarzenie);
 
-                
+                    break;
+                case "zeszło z systemu":
+
+                    break;
+                case "weszło do maszyny":
+
+                    break;
+                case "zeszło z maszyny":
+
+                    break;
+                case "weszło do bufora":
+
+                    break;
+                case "zeszło z bufora":
+
+                    break;
+                default:
+                    break;
             }
         }
 
@@ -131,6 +113,14 @@ namespace Kolejki3.Logika
             lz.Add(new Zdarzenie(0));
             lz.Last().wylosujCzas();
             noweWydarzenie("weszło do systemu", lz.Last().ID);
+        }
+
+        private Zdarzenie findRequestById(List<Zdarzenie> lz, int id)
+        {
+            foreach (Zdarzenie z in lz)
+                if (z.ID == id)
+                    return z;
+            return lz.First();
         }
     }
 }
