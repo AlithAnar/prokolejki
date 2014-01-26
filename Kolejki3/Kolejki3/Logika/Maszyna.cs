@@ -27,6 +27,7 @@ namespace Kolejki3.Logika
             Zdarzenie ev = new Zdarzenie(workingEvent);
             workingEvent = null;
             empty = true;
+            ev.timeLeaving += 60;
             Console.Out.WriteLine("zdjeto " + ev.ID);
             return ev;
             }

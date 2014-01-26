@@ -12,10 +12,11 @@ namespace Kolejki3.Logika
 
         List<Modul> listModules;
         public List<Zdarzenie> listEvents;
-        List<Komunikat> listRequest;
+        public List<Komunikat> listRequest;
         double engTime;
         float M; 
-        public bool Simulating;
+        //public List<String> listaWydarzen;
+
 
         public Engine(List<Modul> lm, List<Zdarzenie> lz, List<Komunikat> lw, float m)
         {
@@ -23,7 +24,6 @@ namespace Kolejki3.Logika
             this.listEvents = lz;
             this.listRequest = lw;
             this.M = m;
-            Simulating = false;
             if (lz == null)
                 this.listEvents = new List<Zdarzenie>();
             if (lw == null)
@@ -35,25 +35,34 @@ namespace Kolejki3.Logika
             Komunikat helpyRequest;
             Zdarzenie helpyEvent;
             engTime = 0;
-
+            Console.Out.WriteLine(engTime); 
             while (engTime < stopTime)
             {
+               //losuj nowe zdarzenie (czyli zadanie do wykonania) i dodaj na koniec listy komunikatów
                 newRandomEvent(listEvents);
-
+                //pobierz pierwszy komunikat z listy komunikatów
                 helpyRequest = listRequest.First();
-                
+                //pobierz zdarzenie którego dotyczył pobrany komunikat  
                 helpyEvent = findRequestById(listEvents, helpyRequest.getRequestId());
-
+                //uaktualnij czas, czyli z komunikatu przeczytaj czas
                 engTime = helpyRequest.getRequestTime();
-
+                //zareaguj na komunikat (jesli weszło do sytemu to przenieś do modułu, 
+                //jesli weszło do kolejki do daj do maszyny, 
+                //jeśli jest w maszynie do wyjmij z modułu), każda reakcja generuje komunikat. 
+                //Jesli: "weszło do systemu" -> reakcją jest wylosowanie do którego modułu przejść i czy kolejka jest wolna, 
+                //jesli tak, to generuje komunikat "weszło do kolejki", 
+                //jeśli "weszło do kolejki" to sprawdz maszynę jesli wolna to "weszło do maszyny", 
+                //jeśli "weszło do maszyny" to obliczamy czas zakończenia i generujemy komunikat "zeszło z maszyny", 
+                //jesli "zeszło z maszyny" to sprawdź czy ma gdzi iść.
+                //tak powinno to działać, jeszcze tego wszystkiego nie robi
                 systemResponse(helpyRequest, helpyEvent);
-                
+                //usuń wykonany już komunikat z listy komunikatów                
                 listRequest.RemoveAt(0);
-
+                //usuń wykonany już komunikat z listy komunikatów                
                 listRequest.Sort(CompareRequestsById);
 
-                Console.Out.WriteLine(engTime);
-               // Thread.Sleep(1000);
+                Console.Out.WriteLine(engTime); 
+                Thread.Sleep(1000);
             }
         }
 
@@ -65,29 +74,64 @@ namespace Kolejki3.Logika
                     weszloDoSystemu(helpyEvent);
                     break;
                 case "zeszło z systemu":
-
+                    zeszloZSystemu(helpyEvent);
                     break;
                 case "weszło do maszyny":
-
+                    weszloDoMaszyny(helpyEvent);
                     break;
                 case "zeszło z maszyny":
-
+                    zeszloZMaszyny(helpyEvent);
                     break;
                 case "weszło do bufora":
-
+                    weszloDoBufora(helpyEvent);
                     break;
                 case "zeszło z bufora":
-
+                    zeszloZBufora(helpyEvent);
                     break;
                 default:
                     break;
             }
         }
 
+        private void zeszloZBufora(Zdarzenie z)
+            {
+            findFirstModule().machins.First(x => x.isEmpty() == true).put(z);
+            newRequest(engTime, "weszło do maszyny", z.ID);
+            }
+
+
+
+        private void weszloDoBufora(Zdarzenie z)
+            {
+            z = findFirstModule().buffer.get();
+            //newRequest(engTime, "zeszło z bufora", z.ID);
+            }
+        private void zeszloZSystemu(Zdarzenie z)
+            {
+            
+            }
+
+        private void zeszloZMaszyny(Zdarzenie z)
+            {
+           
+            }
+
+        private void weszloDoMaszyny(Zdarzenie z)
+            {
+            z.getFromMachine(listEvents);
+            engTime += z.timeLeaving;
+            newRequest(engTime, "zeszło z maszyny", z.ID);
+            }
+
         private void weszloDoSystemu(Zdarzenie z)
         {
-            findFirstModule().putOnQueue(z);
-            newRequest(engTime, "weszło do maszyny 1", z.ID);
+        Modul m = findFirstModule();
+        if (!m.buffer.isFull())
+            {
+            m.putOnQueue(z);
+            newRequest(engTime, "weszło do bufora", z.ID);
+            }
+            
         }
 
         private Modul findFirstModule()

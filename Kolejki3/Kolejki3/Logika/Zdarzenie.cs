@@ -59,11 +59,5 @@ namespace Kolejki3.Logika
             }
 
 
-
-        public void weszloNaMaszyne() { }
-        public void weszloDoKolejki() { }
-        public void weszloDoSieci() { }
-        public void zeszloZSieci() { }
-
         }
     }

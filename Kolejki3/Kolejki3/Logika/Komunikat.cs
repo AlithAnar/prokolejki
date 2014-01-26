@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace Kolejki3.Logika
 {
-    class Komunikat
+    public class Komunikat
     {
+        public String Out { get { return ToString(); }}
         double requestTime;
         string requestType;
         int requestId;
@@ -36,6 +37,11 @@ namespace Kolejki3.Logika
         {
             return requestId;
         }
+
+        public override string ToString()
+            {
+            return "Z: " + requestId + " " + requestType + " :: " + requestTime;
+            }
 
     }
 }

@@ -39,23 +39,29 @@
             this.panelMain = new System.Windows.Forms.Panel();
             this.button1 = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.textBoxMi = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.numericUpDownMachineCount = new System.Windows.Forms.NumericUpDown();
             this.numericUpDownQueueSize = new System.Windows.Forms.NumericUpDown();
             this.comboBoxTypes = new System.Windows.Forms.ComboBox();
-            this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.textBox2 = new System.Windows.Forms.TextBox();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMachineCount)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownQueueSize)).BeginInit();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -77,9 +83,9 @@
             // akcjeBox
             // 
             this.akcjeBox.FormattingEnabled = true;
-            this.akcjeBox.Location = new System.Drawing.Point(781, 38);
+            this.akcjeBox.Location = new System.Drawing.Point(781, 246);
             this.akcjeBox.Name = "akcjeBox";
-            this.akcjeBox.Size = new System.Drawing.Size(203, 524);
+            this.akcjeBox.Size = new System.Drawing.Size(203, 316);
             this.akcjeBox.TabIndex = 4;
             // 
             // menuStrip1
@@ -125,9 +131,9 @@
             // 
             this.panelMain.AllowDrop = true;
             this.panelMain.BackColor = System.Drawing.Color.Linen;
-            this.panelMain.Location = new System.Drawing.Point(203, 91);
+            this.panelMain.Location = new System.Drawing.Point(203, 62);
             this.panelMain.Name = "panelMain";
-            this.panelMain.Size = new System.Drawing.Size(557, 478);
+            this.panelMain.Size = new System.Drawing.Size(562, 500);
             this.panelMain.TabIndex = 8;
             // 
             // button1
@@ -154,6 +160,22 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Właściwości systemu";
             // 
+            // textBoxMi
+            // 
+            this.textBoxMi.Location = new System.Drawing.Point(24, 56);
+            this.textBoxMi.Name = "textBoxMi";
+            this.textBoxMi.Size = new System.Drawing.Size(41, 20);
+            this.textBoxMi.TabIndex = 15;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(2, 59);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(19, 13);
+            this.label6.TabIndex = 11;
+            this.label6.Text = "M:";
+            // 
             // groupBox2
             // 
             this.groupBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
@@ -169,13 +191,6 @@
             this.groupBox2.TabIndex = 11;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Właściwości modułu:";
-            // 
-            // textBoxMi
-            // 
-            this.textBoxMi.Location = new System.Drawing.Point(24, 56);
-            this.textBoxMi.Name = "textBoxMi";
-            this.textBoxMi.Size = new System.Drawing.Size(41, 20);
-            this.textBoxMi.TabIndex = 15;
             // 
             // numericUpDownMachineCount
             // 
@@ -212,15 +227,6 @@
             this.comboBoxTypes.Size = new System.Drawing.Size(72, 21);
             this.comboBoxTypes.TabIndex = 12;
             // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(2, 59);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(19, 13);
-            this.label6.TabIndex = 11;
-            this.label6.Text = "M:";
-            // 
             // label5
             // 
             this.label5.AutoSize = true;
@@ -250,7 +256,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(203, 62);
+            this.button2.Location = new System.Drawing.Point(310, 33);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 12;
@@ -275,11 +281,57 @@
             this.label2.TabIndex = 14;
             this.label2.Text = "Polaczenia";
             // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.textBox2);
+            this.groupBox3.Controls.Add(this.label8);
+            this.groupBox3.Controls.Add(this.textBox1);
+            this.groupBox3.Controls.Add(this.label7);
+            this.groupBox3.Location = new System.Drawing.Point(781, 62);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(200, 168);
+            this.groupBox3.TabIndex = 15;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Statystyki";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(7, 30);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(81, 13);
+            this.label7.TabIndex = 0;
+            this.label7.Text = "Średni czas I/O";
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(120, 24);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(74, 20);
+            this.textBox1.TabIndex = 1;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(7, 65);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(110, 13);
+            this.label8.TabIndex = 2;
+            this.label8.Text = "Średni czas w kolejce";
+            // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(120, 62);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(74, 20);
+            this.textBox2.TabIndex = 3;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(996, 580);
+            this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.listBox1);
             this.Controls.Add(this.button2);
@@ -300,6 +352,8 @@
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMachineCount)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownQueueSize)).EndInit();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -330,6 +384,11 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label label7;
         }
     }
 

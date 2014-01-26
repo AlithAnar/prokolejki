@@ -33,16 +33,12 @@ namespace Kolejki3
 
         private void simStart(object sender, EventArgs e)
             {
-            Console.Out.WriteLine("logi:");
+            
                
-            if (queuesEngine != null && queuesEngine.Simulating == true)
-                {
-                queuesEngine.Simulating = false;
-            }
             if (listaModulow.Count > 0)
                 {
+                Console.Out.WriteLine("logi:");
                 startEngine(listaModulow, listaZdarzen, listaWydarzen);
-                queuesEngine.Simulating = true;
                 }
             }
 
@@ -171,6 +167,8 @@ namespace Kolejki3
             if (pomButtonClickCount < 1)
             {
                 queuesEngine.run(3);
+                akcjeBox.DataSource = queuesEngine.listRequest;
+                akcjeBox.DisplayMember = "Out";
             }
             
             pomButtonClickCount++;
