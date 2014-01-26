@@ -14,7 +14,7 @@ namespace Kolejki3.Logika
         List<Modul> listModules;
         public List<Zdarzenie> listEvents;
         public List<Komunikat> listRequest;
-        public List<Komunikat> statystyki;
+        public List<Komunikat> stats;
         double engTime;
         float M; 
         //public List<String> listaWydarzen;
@@ -32,7 +32,7 @@ namespace Kolejki3.Logika
                 this.listRequest = new List<Komunikat>();
 
             MainForm = mf;
-            statystyki = new List<Komunikat>();
+            stats = new List<Komunikat>();
            
         }
 
@@ -68,10 +68,11 @@ namespace Kolejki3.Logika
                 listRequest.Sort(CompareRequestsById);
 
                 MainForm.akcjeBox.DataSource = null;
-                MainForm.akcjeBox.DataSource = statystyki;
+                MainForm.akcjeBox.DataSource = stats;
                 MainForm.akcjeBox.DisplayMember = "Out";
+                calculateStats();
                 Console.Out.WriteLine(engTime); 
-                Thread.Sleep(1000);
+                //Thread.Sleep(1000);
             }
         }
 
@@ -108,8 +109,6 @@ namespace Kolejki3.Logika
             newRequest(engTime, "weszło do maszyny", z.ID);
             }
 
-
-
         private void weszloDoBufora(Zdarzenie z)
             {
             z = findFirstModule().buffer.get();
@@ -143,6 +142,24 @@ namespace Kolejki3.Logika
             
         }
 
+        private void calculateStats()
+            {
+
+            foreach (Komunikat k in stats)
+                {
+                // jak komunikaty wygeneruja sie az do zejscia z systemu to bedziemy mogli obliczyc statystyki
+                if (k.getRequestType() == "weszło do systemu")
+                    {
+                    Zdarzenie z = findRequestById(listEvents, k.getRequestId());
+
+                    }
+
+                }
+
+            MainForm.aio.Text = "do obliczenia";
+            MainForm.aqt.Text = "do obliczenia";
+            }
+
         private Modul findFirstModule()
         {
             foreach (Modul m in listModules)
@@ -154,7 +171,7 @@ namespace Kolejki3.Logika
         private void newRequest(double time, string type, int id)
         {
             listRequest.Add(new Komunikat(time, type, id));
-            statystyki.Add(new Komunikat(time, type, id));
+            stats.Add(new Komunikat(time, type, id));
         }
 
         private void newRandomEvent(List<Zdarzenie> lz)
