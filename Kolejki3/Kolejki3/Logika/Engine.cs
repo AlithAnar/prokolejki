@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Kolejki3.Logika
 {
@@ -13,12 +14,13 @@ namespace Kolejki3.Logika
         List<Modul> listModules;
         public List<Zdarzenie> listEvents;
         public List<Komunikat> listRequest;
+        public List<Komunikat> statystyki;
         double engTime;
         float M; 
         //public List<String> listaWydarzen;
+        public Form1 MainForm { get; set; }
 
-
-        public Engine(List<Modul> lm, List<Zdarzenie> lz, List<Komunikat> lw, float m)
+        public Engine(List<Modul> lm, List<Zdarzenie> lz, List<Komunikat> lw, float m, Form1 mf)
         {
             this.listModules = lm;
             this.listEvents = lz;
@@ -28,6 +30,10 @@ namespace Kolejki3.Logika
                 this.listEvents = new List<Zdarzenie>();
             if (lw == null)
                 this.listRequest = new List<Komunikat>();
+
+            MainForm = mf;
+            statystyki = new List<Komunikat>();
+           
         }
 
         internal void run(int stopTime)
@@ -61,6 +67,9 @@ namespace Kolejki3.Logika
                 //usuń wykonany już komunikat z listy komunikatów                
                 listRequest.Sort(CompareRequestsById);
 
+                MainForm.akcjeBox.DataSource = null;
+                MainForm.akcjeBox.DataSource = statystyki;
+                MainForm.akcjeBox.DisplayMember = "Out";
                 Console.Out.WriteLine(engTime); 
                 Thread.Sleep(1000);
             }
@@ -145,6 +154,7 @@ namespace Kolejki3.Logika
         private void newRequest(double time, string type, int id)
         {
             listRequest.Add(new Komunikat(time, type, id));
+            statystyki.Add(new Komunikat(time, type, id));
         }
 
         private void newRandomEvent(List<Zdarzenie> lz)

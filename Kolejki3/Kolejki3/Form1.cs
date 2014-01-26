@@ -161,14 +161,11 @@ namespace Kolejki3
 
         private void startEngine(List<Modul> lm, List<Zdarzenie> lz, List<Komunikat> lw)
         {
-            queuesEngine = new Engine(lm, lz, lw , float.Parse(textBoxMi.Text));
-
+            queuesEngine = new Engine(lm, lz, lw , float.Parse(textBoxMi.Text), this);
             
             if (pomButtonClickCount < 1)
             {
                 queuesEngine.run(3);
-                akcjeBox.DataSource = queuesEngine.listRequest;
-                akcjeBox.DisplayMember = "Out";
             }
             
             pomButtonClickCount++;
