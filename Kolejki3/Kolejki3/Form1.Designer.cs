@@ -52,9 +52,9 @@
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.aqt = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.aio = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -287,9 +287,9 @@
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.textBox2);
+            this.groupBox3.Controls.Add(this.aqt);
             this.groupBox3.Controls.Add(this.label8);
-            this.groupBox3.Controls.Add(this.textBox1);
+            this.groupBox3.Controls.Add(this.aio);
             this.groupBox3.Controls.Add(this.label7);
             this.groupBox3.Location = new System.Drawing.Point(781, 62);
             this.groupBox3.Name = "groupBox3";
@@ -298,12 +298,12 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Statystyki";
             // 
-            // textBox2
+            // aqt
             // 
-            this.textBox2.Location = new System.Drawing.Point(120, 62);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(74, 20);
-            this.textBox2.TabIndex = 3;
+            this.aqt.Location = new System.Drawing.Point(120, 62);
+            this.aqt.Name = "aqt";
+            this.aqt.Size = new System.Drawing.Size(74, 20);
+            this.aqt.TabIndex = 3;
             // 
             // label8
             // 
@@ -314,12 +314,12 @@
             this.label8.TabIndex = 2;
             this.label8.Text = "Średni czas w kolejce";
             // 
-            // textBox1
+            // aio
             // 
-            this.textBox1.Location = new System.Drawing.Point(120, 24);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(74, 20);
-            this.textBox1.TabIndex = 1;
+            this.aio.Location = new System.Drawing.Point(120, 24);
+            this.aio.Name = "aio";
+            this.aio.Size = new System.Drawing.Size(74, 20);
+            this.aio.TabIndex = 1;
             // 
             // label7
             // 
@@ -388,11 +388,11 @@
         private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label7;
         public System.Windows.Forms.ListBox akcjeBox;
+        public System.Windows.Forms.TextBox aqt;
+        public System.Windows.Forms.TextBox aio;
         }
     }
 
