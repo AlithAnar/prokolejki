@@ -38,11 +38,9 @@ namespace Kolejki3.Logika
                 return null;
                 }
 
-            Zdarzenie ev;
             CurrentSize--;
-            ev = queueFIFO.Dequeue();
-            Console.Out.WriteLine("kolejka starcila " + ev.ID);
-            return ev;
+            Console.Out.WriteLine("kolejka starcila ");
+            return queueFIFO.Dequeue();
             }
 
         public override void print()

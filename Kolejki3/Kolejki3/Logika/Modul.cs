@@ -36,19 +36,30 @@ namespace Kolejki3.Logika
             else return false;
         }
 
+        //Kladzie zdarzenie na kolejce
         public void putOnQueue(Zdarzenie z)
         {
             Console.Out.Write("modul " + ID + " ");
             buffer.put(z);
-            if (machins.isFree())
-                machins.freeMachine().put(buffer.get());
         }
 
-        public Zdarzenie getFromMachine(int nr)
+        //Zwraca pierwszy element z kolejki
+        public Zdarzenie getFromQueue()
         {
-            Console.Out.Write("modul " + ID + " ");
-            Zdarzenie z = machins[nr].get();
-            return z;
+            return buffer.get();
+        }
+
+        //kładzie zdarzenie na maszynę
+        public void putOnMachine(Zdarzenie z)
+        {
+            machins.freeMachine().put(z);
+            Console.Out.Write("modul " + ID + " na maszynę zadanie " + z.ID);
+        }
+
+        //Zdejmuje zdarzenie z maszyny
+        internal void getOutEvent(Zdarzenie z)
+        {
+            machins.getOutEvent(z);
         }
     }
 }

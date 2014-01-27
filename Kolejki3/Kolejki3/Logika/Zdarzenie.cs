@@ -8,9 +8,9 @@ namespace Kolejki3.Logika
     {
     public class Zdarzenie
         {
-        public double timeIncoming { get; set; }
+        public double timeIncoming { get; set; } 
         //public double time { get; set; }
-        public double timeLeaving { get; set; }
+        public double timeLeaving { get; set; }  //?
 
         static private int _ID = 0;
         public int ID { get; set; }
@@ -52,12 +52,11 @@ namespace Kolejki3.Logika
             return -(1 / alfa) * Math.Log(1 - x);
         }
 
-        public double randomIncomingTime(double alfa) 
+        public double randomTime(double alfa) 
             {
-                timeIncoming = random(alfa);
+                timeIncoming = Math.Abs( random(alfa) );
                 return timeIncoming;
             }
-
 
         }
     }

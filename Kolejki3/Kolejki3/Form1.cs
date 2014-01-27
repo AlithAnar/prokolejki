@@ -160,21 +160,17 @@ namespace Kolejki3
         }
 
         private void startEngine(List<Modul> lm, List<Zdarzenie> lz, List<Komunikat> lw)
-        {
-            queuesEngine = new Engine(lm, lz, lw , float.Parse(textBoxMi.Text), this);
-            
-            if (pomButtonClickCount < 1)
             {
-                queuesEngine.run(3);
-            }
+                queuesEngine = new Engine(lm, lz, lw, float.Parse(textBoxMi.Text), this, float.Parse(textBoxLambda.Text));
             
-            pomButtonClickCount++;
-            Console.Out.WriteLine("count: " + pomButtonClickCount);
-        }
-
-
-
-
+                if (pomButtonClickCount < 1)
+                {
+                    queuesEngine.run(10);          // <--- tu ustaw czas zakończenia symulacji.
+                }
+            
+                pomButtonClickCount++;
+                Console.Out.WriteLine("count: " + pomButtonClickCount);
+            }
 
         }
     }

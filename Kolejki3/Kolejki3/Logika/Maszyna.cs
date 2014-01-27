@@ -8,7 +8,7 @@ namespace Kolejki3.Logika
     {
     public class Maszyna
         {
-        private Zdarzenie workingEvent { get; set; }
+        private Zdarzenie workingEvent;
         private bool empty = true;
 
         public Maszyna()
@@ -45,5 +45,15 @@ namespace Kolejki3.Logika
             else Console.Out.WriteLine("maszyna " + workingEvent.ID);
             }
 
+            public Zdarzenie getWorkingEvent()
+            {
+                return workingEvent;
+            }
+
+            public void setWorkingEvent(Zdarzenie z)
+            {
+                workingEvent = z;
+            }
+            
         }
     }

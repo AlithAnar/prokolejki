@@ -14,6 +14,7 @@ namespace Kolejki3.Logika
             this.Add(p);
             }
 
+        //Losuje połączenie z listy według wag połączeń
         public Polaczenie randomConnection()
             {
             Random r = new Random();

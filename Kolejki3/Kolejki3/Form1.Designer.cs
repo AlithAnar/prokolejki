@@ -79,6 +79,7 @@
             this.textBoxLambda.Name = "textBoxLambda";
             this.textBoxLambda.Size = new System.Drawing.Size(41, 20);
             this.textBoxLambda.TabIndex = 1;
+            this.textBoxLambda.Text = "1";
             // 
             // akcjeBox
             // 
@@ -166,6 +167,7 @@
             this.textBoxMi.Name = "textBoxMi";
             this.textBoxMi.Size = new System.Drawing.Size(41, 20);
             this.textBoxMi.TabIndex = 15;
+            this.textBoxMi.Text = "1";
             // 
             // label6
             // 
@@ -218,6 +220,7 @@
             // 
             // comboBoxTypes
             // 
+            this.comboBoxTypes.DisplayMember = "FIFO";
             this.comboBoxTypes.FormattingEnabled = true;
             this.comboBoxTypes.Items.AddRange(new object[] {
             "FIFO",
@@ -226,6 +229,7 @@
             this.comboBoxTypes.Name = "comboBoxTypes";
             this.comboBoxTypes.Size = new System.Drawing.Size(72, 21);
             this.comboBoxTypes.TabIndex = 12;
+            this.comboBoxTypes.Text = "FIFO";
             // 
             // label5
             // 
