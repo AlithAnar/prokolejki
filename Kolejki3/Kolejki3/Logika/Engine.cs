@@ -31,14 +31,14 @@ namespace Kolejki3.Logika
             this.L = lambda;
    
             MainForm = mf;
-            statystyki = new List<Komunikat>();
+            stats = new List<Komunikat>();
             if (lz == null)
                 this.listEvents = new List<Zdarzenie>();
             if (lw == null)
                 this.listRequest = new List<Komunikat>();
 
             MainForm = mf;
-            statystyki = new List<Komunikat>();
+            stats = new List<Komunikat>();
            
         }
 
@@ -73,7 +73,7 @@ namespace Kolejki3.Logika
                     //jeśli "odrzucone z systemu" to kolejka jest pełna, a zadanie wypadło z obiegu
                 systemResponse(helpyRequest, helpyEvent);
                     //dodanie komunikatu do statystyk (historia komunikatów)
-                statystyki.Add(helpyRequest);
+                stats.Add(helpyRequest);
                 //usuń wykonany już komunikat z listy komunikatów                
                 listRequest.RemoveAt(0);
                     //posortowanie list komunikatów, aby najwcześniejsze było na pierwszym miejscu              
