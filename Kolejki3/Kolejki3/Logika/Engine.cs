@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -17,10 +18,22 @@ namespace Kolejki3.Logika
         public List<Zdarzenie> listEvents;
         public List<Komunikat> listRequest;
         public List<Komunikat> stats;
+        public bool Simulating { get; set; }
         double engTime;
         float M;    //mi -> losuje czas wykonania się zadania na maszynie
         float L;    //lambda -> losuje czas przyjścia zadań
         public Form1 MainForm { get; set; }
+
+        public delegate void ProgressUpdate(List<Komunikat> list, string s1, string s2, string s3, string s4);
+        public event ProgressUpdate OnProgressUpdate;
+        string avarageIO = "";
+        string avarageInBuffer = "";
+        string absolutePerformance = "";
+        string relativePerformance = "";
+        int eventsout = 0;
+        int eventsrejected = 0;
+
+
 
         public Engine(List<Modul> lm, List<Zdarzenie> lz, List<Komunikat> lw, float m, Form1 mf, float lambda)
         {
@@ -50,7 +63,9 @@ namespace Kolejki3.Logika
             double lastRandomTime = 0;
 
             Console.Out.WriteLine(engTime); 
-            while (engTime < stopTime)
+            Simulating = true;
+            // while (engTime < stopTime)
+            while (true)
             {
                //losuj nowe zdarzenie (czyli zadanie do wykonania) i dodaj na koniec listy komunikatów
                 newRandomEvent(listEvents, lastRandomTime);
@@ -80,16 +95,64 @@ namespace Kolejki3.Logika
                 listRequest.RemoveAt(0);
                     //posortowanie list komunikatów, aby najwcześniejsze było na pierwszym miejscu              
                 listRequest.Sort(CompareRequestsByTime);
-
                     //wyświetlanie komunikatów
-                MainForm.akcjeBox.DataSource = null;
-                MainForm.akcjeBox.DataSource = stats;
-                MainForm.akcjeBox.DisplayMember = "Out";
-                calculateStats();
+                updateStats();
+                if (OnProgressUpdate != null)
+                    {
+                    OnProgressUpdate(stats, avarageIO, avarageInBuffer, absolutePerformance, relativePerformance);
+                    }
+
                 Console.Out.WriteLine(engTime); 
-                //Thread.Sleep(1000);         //  <-----  może usunąć?
+                Thread.Sleep(1000);         //  <-----  może usunąć?
+                if (!Simulating) break;
+                }
+            }
+
+        private void updateStats()
+            {
+            double sum = 0;
+            foreach (Komunikat ko in stats)
+                {
+                if (ko.getRequestType() == "wyszło z systemu")
+                    {
+                    double outtime = ko.getRequestTime();
+                    int id = ko.getRequestId();
+                    Komunikat ki = stats.First(x => x.getRequestId() == id && x.getRequestType() == "weszło do systemu");
+                    if (ki != null)
+                        {
+                        sum += outtime - ki.getRequestTime();
+                        }
+                    }
+
+                }
+            if (eventsout != 0)
+                sum = sum / eventsout;
+            avarageIO = sum.ToString();
+
+            foreach (Komunikat ko in stats)
+                {
+                if (ko.getRequestType() == "zeszło z bufora")
+                    {
+                    double outtime = ko.getRequestTime();
+                    int id = ko.getRequestId();
+                    Komunikat ki = stats.First(x => x.getRequestId() == id && x.getRequestType() == "weszło do bufora");
+                    if (ki != null)
+                        {
+                        sum += outtime - ki.getRequestTime();
             }
         }
+
+                }
+            if (listEvents.Count != 0)
+                {
+                sum = sum / listEvents.Count;
+                avarageInBuffer = sum.ToString();
+                double t = ((double)eventsrejected / (double)listEvents.Count);
+                double t2 = t * L;
+                absolutePerformance = t.ToString();
+                relativePerformance = t2.ToString();
+                }
+            }
 
         private double getLastEventIncomingTime()
         {
@@ -162,17 +225,16 @@ namespace Kolejki3.Logika
 
         private void odrzuconeZSystemu(Zdarzenie z)
             {
+            eventsrejected++;
             //skoro nie ma miejsca w kolejce, to wypada również z listy
             listEvents.Remove(z);
             }
 
         private void zeszloZBufora(Zdarzenie z, Komunikat k)
-        {
-            //findFirstModule().machins.First(x => x.isEmpty() == true).put(z);
-
-            //gdy zadanie zeszło z kolejki to wchodzi na maszynę
-            ((Modul)k.getKontekst()).putOnMachine(z);
-            newRequest(engTime, "weszło do maszyny", z.ID, ((Modul)k.getKontekst()));   //tu przekazuję kontekst. Jest typu Object, bo myślałem, 
+            {
+                //gdy zadanie zeszło z kolejki to wchodzi na maszynę
+                ((Modul)k.getKontekst()).putOnMachine(z);
+                newRequest(engTime, "weszło do maszyny", z.ID, ((Modul)k.getKontekst()));   //tu przekazuję kontekst. Jest typu Object, bo myślałem, 
                                                                                         //  że może łatwie będzie przenosić różne, ale w praktyce są wszędzie Modul. 
             // TODO czy to działa?
             foreach (Modul m in listModules)
@@ -201,22 +263,24 @@ namespace Kolejki3.Logika
 
         private void wyszloZSystemu(Zdarzenie z)
             {
+            eventsout++;
                 //czyszczę listę zdarzeń, gdy zdarzenie skończy swój cykl życia
                 listEvents.Remove(z);
+
             }
 
         private void zeszloZMaszyny(Zdarzenie z, Komunikat k)
             {
-                //skoro tak to zdejmij zadanie z maszyny
-                ((Modul)k.getKontekst()).getOutEvent(z);
-                //sprawdź czy coś czeka w kolejce
+                    //skoro tak to zdejmij zadanie z maszyny
+                    ((Modul)k.getKontekst()).getOutEvent(z);
+                    //sprawdź czy coś czeka w kolejce
                 if (!((Modul)k.getKontekst()).buffer.isEmpty())
-                {
-                    //TYLKO przeczytaj ID zadania oczekującego, bo "zeszło z bufora" usunie je już z kolejki
-                    int id = ((Modul)k.getKontekst()).getFromQueue().ID;
-                    newRequest(engTime, "zeszło z bufora", id, ((Modul)k.getKontekst()));
+                    {
+                        //TYLKO przeczytaj ID zadania oczekującego, bo "zeszło z bufora" usunie je już z kolejki
+                        int id = ((Modul)k.getKontekst()).getFromQueue().ID;
+                        newRequest(engTime, "zeszło z bufora", id, ((Modul)k.getKontekst()));
+                    }
                 }
-            }
 
         private void weszloDoMaszyny(Zdarzenie z, Komunikat k)
             {
@@ -231,8 +295,8 @@ namespace Kolejki3.Logika
         private void weszloDoSystemu(Zdarzenie z, Komunikat k)
         {
             //jesli kolejka jest pusta
-            if (! ((Modul)k.getKontekst()).buffer.isFull())
-            {
+            if (!((Modul)k.getKontekst()).buffer.isFull())
+        {
                 //to umieść w niej zadanie
                 ((Modul)k.getKontekst()).putOnQueue(z);
                 newRequest(engTime, "weszło do bufora", z.ID, ((Modul)k.getKontekst()));
@@ -242,24 +306,6 @@ namespace Kolejki3.Logika
                 //w przeciwnym razie odrzuć zadanie z systemu
                 newRequest(engTime, "odrzucone z systemu", z.ID, ((Modul)k.getKontekst()));
             }
-        }
-
-        private void calculateStats()
-            {
-
-            foreach (Komunikat k in stats)
-                {
-                // jak komunikaty wygeneruja sie az do zejscia z systemu to bedziemy mogli obliczyc statystyki
-                if (k.getRequestType() == "weszło do systemu")
-                    {
-                    Zdarzenie z = findRequestById(listEvents, k.getRequestId());
-
-                    }
-
-                }
-
-            MainForm.aio.Text = "do obliczenia";
-            MainForm.aqt.Text = "do obliczenia";
             }
 
         private Modul findFirstModule()
@@ -298,7 +344,7 @@ namespace Kolejki3.Logika
         //To jest komperator, metoda która porównuje komunikaty. Metoda niezbędna do sortowania.
         private static int CompareRequestsByTime(Komunikat x, Komunikat y)
         {
-            if (x.getRequestTime() == y.getRequestTime())
+                if (x.getRequestTime() == y.getRequestTime())
             {
                 if (x.getRequestType() == "zeszło z maszyny" && y.getRequestType() == "wyszło z systemu")
                     return -1;
@@ -308,12 +354,12 @@ namespace Kolejki3.Logika
                     return 1;
                 if (y.getRequestType() == "zeszło z maszyny" && x.getRequestType() == "weszło do bufora")
                     return 1;
-                return 0;
+                    return 0;
             }
-            else if (x.getRequestTime() > y.getRequestTime())
-                return 1;
-            else
-                return -1;
+                else if (x.getRequestTime() > y.getRequestTime())
+                    return 1;
+                else
+                    return -1;
         }
     }
 }

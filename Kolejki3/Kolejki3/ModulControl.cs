@@ -28,11 +28,10 @@ namespace Kolejki3
 
             InitializeComponent();
             label1.Text = "Maszyny: " + _modul.machins.Count;
-            label2.Text = "Dł. kolejki " + _modul.buffer.MaxSize;
-            label3.Text = "W kolejce: ";
-            label4.Text = "W maszynie: ";
+            lengthText.Text = "Dł. kolejki " + _modul.buffer.MaxSize;
+            currentInBuffer.Text = "W kolejce: ";
+            currentInMachine.Text = "W maszynie: ";
             label5.Text = "Reguła: " + _modul.buffer.getRuleType();
-            label6.Text = "M: ";
             labeId.Text = "ID: " + _modul.ID;
             }
 

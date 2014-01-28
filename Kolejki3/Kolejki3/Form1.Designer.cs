@@ -52,10 +52,19 @@
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.absPerf = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.avarageLength = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
             this.aqt = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.aio = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
+            this.relativePerf = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -83,6 +92,8 @@
             // 
             // akcjeBox
             // 
+            this.akcjeBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.akcjeBox.FormattingEnabled = true;
             this.akcjeBox.Location = new System.Drawing.Point(781, 246);
             this.akcjeBox.Name = "akcjeBox";
@@ -287,6 +298,12 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.relativePerf);
+            this.groupBox3.Controls.Add(this.label11);
+            this.groupBox3.Controls.Add(this.absPerf);
+            this.groupBox3.Controls.Add(this.label10);
+            this.groupBox3.Controls.Add(this.avarageLength);
+            this.groupBox3.Controls.Add(this.label9);
             this.groupBox3.Controls.Add(this.aqt);
             this.groupBox3.Controls.Add(this.label8);
             this.groupBox3.Controls.Add(this.aio);
@@ -297,6 +314,38 @@
             this.groupBox3.TabIndex = 15;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Statystyki";
+            // 
+            // absPerf
+            // 
+            this.absPerf.Location = new System.Drawing.Point(120, 116);
+            this.absPerf.Name = "absPerf";
+            this.absPerf.Size = new System.Drawing.Size(74, 20);
+            this.absPerf.TabIndex = 7;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(7, 119);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(101, 13);
+            this.label10.TabIndex = 6;
+            this.label10.Text = "Wydajnosc bezwzgl";
+            // 
+            // avarageLength
+            // 
+            this.avarageLength.Location = new System.Drawing.Point(120, 90);
+            this.avarageLength.Name = "avarageLength";
+            this.avarageLength.Size = new System.Drawing.Size(74, 20);
+            this.avarageLength.TabIndex = 5;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(7, 93);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(102, 13);
+            this.label9.TabIndex = 4;
+            this.label9.Text = "Średnia długość kol";
             // 
             // aqt
             // 
@@ -330,11 +379,50 @@
             this.label7.TabIndex = 0;
             this.label7.Text = "Średni czas I/O";
             // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(391, 33);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(75, 23);
+            this.button3.TabIndex = 16;
+            this.button3.Text = "Stop";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(473, 32);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(75, 23);
+            this.button4.TabIndex = 17;
+            this.button4.Text = "Usun";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Visible = false;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // relativePerf
+            // 
+            this.relativePerf.Location = new System.Drawing.Point(119, 149);
+            this.relativePerf.Name = "relativePerf";
+            this.relativePerf.Size = new System.Drawing.Size(74, 20);
+            this.relativePerf.TabIndex = 9;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(6, 152);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(84, 13);
+            this.label11.TabIndex = 8;
+            this.label11.Text = "Wydajnosc wzgl";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(996, 580);
+            this.Controls.Add(this.button4);
+            this.Controls.Add(this.button3);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.listBox1);
@@ -393,6 +481,15 @@
         public System.Windows.Forms.ListBox akcjeBox;
         public System.Windows.Forms.TextBox aqt;
         public System.Windows.Forms.TextBox aio;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button button4;
+        public System.Windows.Forms.TextBox avarageLength;
+        private System.Windows.Forms.Label label9;
+        public System.Windows.Forms.TextBox absPerf;
+        private System.Windows.Forms.Label label10;
+        public System.Windows.Forms.TextBox relativePerf;
+        private System.Windows.Forms.Label label11;
         }
     }
 

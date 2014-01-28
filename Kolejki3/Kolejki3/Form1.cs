@@ -6,6 +6,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -15,13 +16,12 @@ namespace Kolejki3
         {
         List<Modul> listaModulow;
         public List<Zdarzenie> listaZdarzen;
-        List<Komunikat> listaWydarzen;
+        public List<Komunikat> listaWydarzen;
         Engine queuesEngine;
         private Point _lastPoint, _newPoint;
         private int _lastId = -1, _newId = -1;
 
         private int pomButtonClickCount = 0;
-
 
         public int SelectedModules { get; set; }
         public Form1()
@@ -29,12 +29,17 @@ namespace Kolejki3
             InitializeComponent();
             listaModulow = new List<Modul>();
             SelectedModules = 0;
+             backgroundWorker1.DoWork+=backgroundWorker1_DoWork;
+             backgroundWorker1.WorkerSupportsCancellation = true;
             }
 
+        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+            {
+            queuesEngine.run(100);
+            }
+            
         private void simStart(object sender, EventArgs e)
             {
-            
-               
             if (listaModulow.Count > 0)
                 {
                 Console.Out.WriteLine("logi:");
@@ -96,7 +101,7 @@ namespace Kolejki3
             {
             SelectedModules++;
 
-                
+            button4.Visible = true;
                 ModulControl md = sender as ModulControl;
             _lastId = _newId;
             _lastPoint = _newPoint;
@@ -154,25 +159,84 @@ namespace Kolejki3
                 }
             }
 
-        private void button2_MouseClick(object sender, MouseEventArgs e)
-        {
-
-        }
-
         private void startEngine(List<Modul> lm, List<Zdarzenie> lz, List<Komunikat> lw)
             {
                 queuesEngine = new Engine(lm, lz, lw, float.Parse(textBoxMi.Text), this, float.Parse(textBoxLambda.Text));
             
                 if (pomButtonClickCount < 1)
                 {
-                    //queuesEngine._END_MODUL = 1; // jesli ma być tylko jeden moduł
-                    queuesEngine._END_MODUL = 2; // jeśli mają być dwa moduły
-                    queuesEngine.run(50);          // <--- tu ustaw czas zakończenia symulacji.
+                    //queuesEngine.run(100);          // <--- tu ustaw czas zakończenia symulacji.
+                queuesEngine._END_MODUL = 1; // jesli ma być tylko jeden moduł
+                //    queuesEngine._END_MODUL = 2; // jeśli mają być dwa moduły
+                    queuesEngine.OnProgressUpdate+=queuesEngine_OnProgressUpdate;
+                backgroundWorker1.RunWorkerAsync();
+                    
+                   // queuesEngine.run(50);          // <--- tu ustaw czas zakończenia symulacji.
                 }
             
                 pomButtonClickCount++;
                 Console.Out.WriteLine("count: " + pomButtonClickCount);
             }
+
+        private void queuesEngine_OnProgressUpdate(List<Komunikat> list, string s1, string s2, string s3, string s4)
+            {
+            base.Invoke((Action)delegate
+                {
+                    this.aqt.Text = s1;
+                    this.aio.Text = s2;
+                    this.avarageLength.Text = "0";
+                    this.absPerf.Text = s3;
+                    this.relativePerf.Text = s4;
+                    this.akcjeBox.DataSource = null;
+                    this.akcjeBox.DataSource = list;
+                    this.akcjeBox.DisplayMember = "Out";
+                    //foreach (Control c in panelMain.Controls)
+                    //    {
+                    //    ModulControl m = (ModulControl)c;
+                    //    if (m.ID == id)
+                    //        {
+                    //        m.currentInBuffer.Text = inbuffer;
+                    //        m.currentInMachine.Text = inmachine;
+                    //        }
+                    //    }  
+
+                    for (int i = 0; i < listaModulow.Count; i++)
+                        {
+                        ModulControl m = panelMain.Controls[i] as ModulControl;
+                        if (m != null)
+                            {
+                            m.currentInBuffer.Text = "Ile w kolejce: " + listaModulow[i].buffer.CurrentSize.ToString();
+                            string inmachine = "Zajęte maszyny: ";
+                            
+                            for (int x = 0; x < listaModulow[i].machins.Count; x++)
+                                {
+                                if (!listaModulow[i].machins[x].isEmpty())
+                                    {
+                                    inmachine += x + " ";
+                                    }
+                                }
+                            m.currentInMachine.Text = inmachine;
+                            
+                            }
+
+                        }
+
+                  });
+            }
+
+        private void button3_Click(object sender, EventArgs e)
+            {
+            queuesEngine.Simulating = false;
+            }
+
+        private void button4_Click(object sender, EventArgs e)
+            {
+            ModulControl md = sender as ModulControl;
+            listaModulow.RemoveAt(_newId);
+            panelMain.Controls.RemoveAt(_newId);
+            button4.Visible = false;
+            }
+
 
         }
     }
