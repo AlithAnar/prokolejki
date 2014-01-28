@@ -174,12 +174,15 @@ namespace Kolejki3
                 Console.Out.WriteLine("count: " + pomButtonClickCount);
             }
 
-        private void queuesEngine_OnProgressUpdate(List<Komunikat> list, string tmp)
+        private void queuesEngine_OnProgressUpdate(List<Komunikat> list, string s1, string s2, string s3, string s4)
             {
             base.Invoke((Action)delegate
                 {
-                    this.aqt.Text = tmp;
-                    this.aio.Text = tmp;
+                    this.aqt.Text = s1;
+                    this.aio.Text = s2;
+                    this.avarageLength.Text = "0";
+                    this.absPerf.Text = s3;
+                    this.relativePerf.Text = s4;
                     this.akcjeBox.DataSource = null;
                     this.akcjeBox.DataSource = list;
                     this.akcjeBox.DisplayMember = "Out";
@@ -192,6 +195,28 @@ namespace Kolejki3
                     //        m.currentInMachine.Text = inmachine;
                     //        }
                     //    }  
+
+                    for (int i = 0; i < listaModulow.Count; i++)
+                        {
+                        ModulControl m = panelMain.Controls[i] as ModulControl;
+                        if (m != null)
+                            {
+                            m.currentInBuffer.Text = "Ile w kolejce: " + listaModulow[i].buffer.CurrentSize.ToString();
+                            string inmachine = "Zajęte maszyny: ";
+                            
+                            for (int x = 0; x < listaModulow[i].machins.Count; x++)
+                                {
+                                if (!listaModulow[i].machins[x].isEmpty())
+                                    {
+                                    inmachine += x + " ";
+                                    }
+                                }
+                            m.currentInMachine.Text = inmachine;
+                            
+                            }
+
+                        }
+
                   });
             }
 
