@@ -29,6 +29,10 @@ namespace Kolejki3.Logika
             if (CurrentSize == MaxSize) return true; else return false;
             }
 
+        public bool isFree()
+        {
+            if (CurrentSize < MaxSize) return true; else return false;
+        }
 
         }
     }

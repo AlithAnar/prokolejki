@@ -10,7 +10,7 @@ namespace Kolejki3.Logika
 {
     class Engine
     {
-        private static int _END_MODUL = 1;      // ID moduły, który jest już poza systemem
+        public int _END_MODUL = 3;      // ID moduły, który jest już poza systemem
         private static int _START_MODUL = 0;    // ID pierwszego modułu do którego wejdzie zadanie
 
         List<Modul> listModules;
@@ -74,6 +74,8 @@ namespace Kolejki3.Logika
                 systemResponse(helpyRequest, helpyEvent);
                     //dodanie komunikatu do statystyk (historia komunikatów)
                 stats.Add(helpyRequest);
+                Console.Out.WriteLine("--------------  "+helpyRequest.ToString());
+
                 //usuń wykonany już komunikat z listy komunikatów                
                 listRequest.RemoveAt(0);
                     //posortowanie list komunikatów, aby najwcześniejsze było na pierwszym miejscu              
@@ -85,7 +87,7 @@ namespace Kolejki3.Logika
                 MainForm.akcjeBox.DisplayMember = "Out";
                 calculateStats();
                 Console.Out.WriteLine(engTime); 
-                Thread.Sleep(1000);         //  <-----  może usunąć?
+                //Thread.Sleep(1000);         //  <-----  może usunąć?
             }
         }
 
@@ -120,8 +122,41 @@ namespace Kolejki3.Logika
                 case "odrzucone z systemu":
                     odrzuconeZSystemu(helpyEvent);
                     break;
+                case "sprawdzenie kolejnego modułu":
+                    sprawdzenieKolejnegoModulu(helpyEvent, helpyRequest);
+                    break;
                 default:
                     break;
+            }
+        }
+
+        private void sprawdzenieKolejnegoModulu(Zdarzenie z, Komunikat k)
+        {// TODO wiele maszyn
+            Modul futureModule = ((Modul)k.getKontekst()).listConnections.randomConnection().ModulOut;
+
+            //czy moduł na który chce przejść zadanie po wykonaniu się na maszynie jest już poza systemem (_END_MODUL)
+            if (futureModule.ID == _END_MODUL)
+            {
+                newRequest(engTime, "zeszło z maszyny", z.ID, ((Modul)k.getKontekst()));
+                newRequest(engTime, "wyszło z systemu", z.ID, ((Modul)k.getKontekst()));
+                return;
+            }  
+            
+            //jesli przyszła kolejka jest wolna
+            if (futureModule.buffer.isFree())
+            {
+                //to umieść w niej zadanie
+                futureModule.putOnQueue(z);
+                newRequest(engTime, "zeszło z maszyny", z.ID, ((Modul)k.getKontekst()));
+                newRequest(engTime, "weszło do bufora", z.ID, futureModule);
+                return;
+            }
+            
+            //jesli kolejka jest pełna
+            if (futureModule.buffer.isFull())
+            {
+                futureModule.wait();
+                return;
             }
         }
 
@@ -132,14 +167,25 @@ namespace Kolejki3.Logika
             }
 
         private void zeszloZBufora(Zdarzenie z, Komunikat k)
-            {
+        {
             //findFirstModule().machins.First(x => x.isEmpty() == true).put(z);
 
-                //gdy zadanie zeszło z kolejki to wchodzi na maszynę
-                ((Modul)k.getKontekst()).putOnMachine(z);
-                newRequest(engTime, "weszło do maszyny", z.ID, ((Modul)k.getKontekst()));   //tu przekazuję kontekst. Jest typu Object, bo myślałem, 
-            }                                                                               //  że może łatwie będzie przenosić różne, ale w praktyce są wszędzie Modul.
+            //gdy zadanie zeszło z kolejki to wchodzi na maszynę
+            ((Modul)k.getKontekst()).putOnMachine(z);
+            newRequest(engTime, "weszło do maszyny", z.ID, ((Modul)k.getKontekst()));   //tu przekazuję kontekst. Jest typu Object, bo myślałem, 
+                                                                                        //  że może łatwie będzie przenosić różne, ale w praktyce są wszędzie Modul. 
+            // TODO czy to działa?
+            foreach (Modul m in listModules)
+            {
+                if(m.isWaiting())
+                {
+                    m.stopWaiting();
+                    newRequest(engTime, "sprawdzenie kolejnego modułu", m.getWaitingEventID(), ((Modul)k.getKontekst()));
+                }
+            }
+            Console.Out.WriteLine("TAMTAmTAMTAMTAM"); 
             
+        }
         private void weszloDoBufora(Zdarzenie z, Komunikat k)
             {
            // z = findFirstModule().buffer.get();
@@ -161,20 +207,14 @@ namespace Kolejki3.Logika
 
         private void zeszloZMaszyny(Zdarzenie z, Komunikat k)
             {
-                //czy moduł na który chce przejść zadanie po wykonaniu się na maszynie jest już poza systemem (_END_MODUL)
-                if (((Modul)k.getKontekst()).listConnections.randomConnection().ModulOut.ID == _END_MODUL)
-            {
-                    //skoro tak to zdejmij zadanie z maszyny
-                    ((Modul)k.getKontekst()).getOutEvent(z);
-                    newRequest(engTime, "wyszło z systemu", z.ID, ((Modul)k.getKontekst()));
-           
-                    //sprawdź czy coś czeka w kolejce
-                    if (! ((Modul)k.getKontekst()).buffer.isEmpty())
-                    {
-                        //TYLKO przeczytaj ID zadania oczekującego, bo "zeszło z bufora" usunie je już z kolejki
-                        int id = ((Modul)k.getKontekst()).getFromQueue().ID;
-                        newRequest(engTime, "zeszło z bufora", id, ((Modul)k.getKontekst()));
-                    }
+                //skoro tak to zdejmij zadanie z maszyny
+                ((Modul)k.getKontekst()).getOutEvent(z);
+                //sprawdź czy coś czeka w kolejce
+                if (!((Modul)k.getKontekst()).buffer.isEmpty())
+                {
+                    //TYLKO przeczytaj ID zadania oczekującego, bo "zeszło z bufora" usunie je już z kolejki
+                    int id = ((Modul)k.getKontekst()).getFromQueue().ID;
+                    newRequest(engTime, "zeszło z bufora", id, ((Modul)k.getKontekst()));
                 }
             }
 
@@ -185,14 +225,14 @@ namespace Kolejki3.Logika
 
                 //wylosuj czas opuszczenia maszyny
                 double leavingTime = z.randomTime(M) + engTime;
-                newRequest(leavingTime, "zeszło z maszyny", z.ID, ((Modul)k.getKontekst()));
+                newRequest(leavingTime, "sprawdzenie kolejnego modułu", z.ID, ((Modul)k.getKontekst()));
             }
 
         private void weszloDoSystemu(Zdarzenie z, Komunikat k)
         {
             //jesli kolejka jest pusta
             if (! ((Modul)k.getKontekst()).buffer.isFull())
-        {
+            {
                 //to umieść w niej zadanie
                 ((Modul)k.getKontekst()).putOnQueue(z);
                 newRequest(engTime, "weszło do bufora", z.ID, ((Modul)k.getKontekst()));
@@ -258,12 +298,22 @@ namespace Kolejki3.Logika
         //To jest komperator, metoda która porównuje komunikaty. Metoda niezbędna do sortowania.
         private static int CompareRequestsByTime(Komunikat x, Komunikat y)
         {
-                if (x.getRequestTime() == y.getRequestTime())
-                    return 0;
-                else if (x.getRequestTime() > y.getRequestTime())
-                    return 1;
-                else
+            if (x.getRequestTime() == y.getRequestTime())
+            {
+                if (x.getRequestType() == "zeszło z maszyny" && y.getRequestType() == "wyszło z systemu")
                     return -1;
+                if (x.getRequestType() == "zeszło z maszyny" && y.getRequestType() == "weszło do bufora")
+                    return -1;
+                if (y.getRequestType() == "zeszło z maszyny" && x.getRequestType() == "wyszło z systemu")
+                    return 1;
+                if (y.getRequestType() == "zeszło z maszyny" && x.getRequestType() == "weszło do bufora")
+                    return 1;
+                return 0;
+            }
+            else if (x.getRequestTime() > y.getRequestTime())
+                return 1;
+            else
+                return -1;
         }
     }
 }

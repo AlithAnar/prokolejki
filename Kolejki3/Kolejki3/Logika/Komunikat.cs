@@ -8,7 +8,7 @@ namespace Kolejki3.Logika
 {
     public class Komunikat
     {
-        public String Out { get { return ToString(); }}  //?
+        public String Out { get { return ToString(); }}  
         double requestTime; //czas wydarzenia komunikatu
         string requestType; //typ (tekst) komunikatu
         int requestId;      //ID komunikatu
@@ -50,6 +50,7 @@ namespace Kolejki3.Logika
 
         public override string ToString()
             {
+            //Console.Out.WriteLine("----------------------Z: " + requestId + " " + requestType + " :: " + requestTime);
             return "Z: " + requestId + " " + requestType + " :: " + requestTime;
             }
 

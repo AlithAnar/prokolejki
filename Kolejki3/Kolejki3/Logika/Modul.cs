@@ -14,6 +14,8 @@ namespace Kolejki3.Logika
         public Kolejka buffer;
         public ListaPolaczen listConnections;
         public int ID { get ; set; }
+        public bool waiting = false;
+        public int waitingEventID = -1;
 
         public Modul() { }
         public Modul (Maszyna m, Kolejka k)
@@ -52,14 +54,35 @@ namespace Kolejki3.Logika
         //kładzie zdarzenie na maszynę
         public void putOnMachine(Zdarzenie z)
         {
-            machins.freeMachine().put(z);
+            machins.freeMachine().put(z); //<---!!
             Console.Out.Write("modul " + ID + " na maszynę zadanie " + z.ID);
         }
 
         //Zdejmuje zdarzenie z maszyny
-        internal void getOutEvent(Zdarzenie z)
+        public void getOutEvent(Zdarzenie z)
         {
             machins.getOutEvent(z);
+        }
+
+        public bool isWaiting()
+        {
+            return waiting;
+        }
+
+        public void wait()
+        {
+            waiting = true;
+        }
+
+        public void stopWaiting()
+        {
+            waiting = false;
+            waitingEventID = -1;
+        }
+
+        public int getWaitingEventID()
+        {
+            return waitingEventID;
         }
     }
 }

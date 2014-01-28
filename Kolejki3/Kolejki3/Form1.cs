@@ -165,7 +165,9 @@ namespace Kolejki3
             
                 if (pomButtonClickCount < 1)
                 {
-                    queuesEngine.run(10);          // <--- tu ustaw czas zakończenia symulacji.
+                    //queuesEngine._END_MODUL = 1; // jesli ma być tylko jeden moduł
+                    queuesEngine._END_MODUL = 2; // jeśli mają być dwa moduły
+                    queuesEngine.run(50);          // <--- tu ustaw czas zakończenia symulacji.
                 }
             
                 pomButtonClickCount++;

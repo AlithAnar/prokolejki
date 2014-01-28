@@ -34,8 +34,11 @@ namespace Kolejki3.Logika
         internal void getOutEvent(Zdarzenie z)
         {
             foreach (Maszyna m in this)
-                if (m.getWorkingEvent().ID == z.ID)
-                    m.get();
+            {
+                if (m.getWorkingEvent() != null)
+                    if (m.getWorkingEvent().ID == z.ID)
+                        m.get();
+            }
         }
     }
 }
