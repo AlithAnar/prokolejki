@@ -6,6 +6,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -15,13 +16,12 @@ namespace Kolejki3
         {
         List<Modul> listaModulow;
         public List<Zdarzenie> listaZdarzen;
-        List<Komunikat> listaWydarzen;
+        public List<Komunikat> listaWydarzen;
         Engine queuesEngine;
         private Point _lastPoint, _newPoint;
         private int _lastId = -1, _newId = -1;
 
         private int pomButtonClickCount = 0;
-
 
         public int SelectedModules { get; set; }
         public Form1()
@@ -29,12 +29,17 @@ namespace Kolejki3
             InitializeComponent();
             listaModulow = new List<Modul>();
             SelectedModules = 0;
+             backgroundWorker1.DoWork+=backgroundWorker1_DoWork;
+             backgroundWorker1.WorkerSupportsCancellation = true;
+            }
+
+        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+            {
+            queuesEngine.run(100);
             }
 
         private void simStart(object sender, EventArgs e)
             {
-            
-               
             if (listaModulow.Count > 0)
                 {
                 Console.Out.WriteLine("logi:");
@@ -165,11 +170,30 @@ namespace Kolejki3
             
                 if (pomButtonClickCount < 1)
                 {
-                    queuesEngine.run(10);          // <--- tu ustaw czas zakończenia symulacji.
+                    //queuesEngine.run(100);          // <--- tu ustaw czas zakończenia symulacji.
+                queuesEngine.OnProgressUpdate+=queuesEngine_OnProgressUpdate;
+                backgroundWorker1.RunWorkerAsync();
                 }
             
                 pomButtonClickCount++;
                 Console.Out.WriteLine("count: " + pomButtonClickCount);
+            }
+
+        private void queuesEngine_OnProgressUpdate(List<Komunikat> list, string tmp)
+            {
+            base.Invoke((Action)delegate
+                {
+                    this.aqt.Text = tmp;
+                    this.aio.Text = tmp;
+                    this.akcjeBox.DataSource = null;
+                    this.akcjeBox.DataSource = list;
+                    this.akcjeBox.DisplayMember = "Out";
+                });
+            }
+
+        private void button3_Click(object sender, EventArgs e)
+            {
+            queuesEngine.Simulating = false;
             }
 
         }

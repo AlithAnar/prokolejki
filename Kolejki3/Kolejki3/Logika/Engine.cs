@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -17,10 +18,14 @@ namespace Kolejki3.Logika
         public List<Zdarzenie> listEvents;
         public List<Komunikat> listRequest;
         public List<Komunikat> stats;
+        public bool Simulating { get; set; }
         double engTime;
         float M;    //mi -> losuje czas wykonania się zadania na maszynie
         float L;    //lambda -> losuje czas przyjścia zadań
         public Form1 MainForm { get; set; }
+
+        public delegate void ProgressUpdate(List<Komunikat> list, string tmp);
+        public event ProgressUpdate OnProgressUpdate;
 
         public Engine(List<Modul> lm, List<Zdarzenie> lz, List<Komunikat> lw, float m, Form1 mf, float lambda)
         {
@@ -49,7 +54,9 @@ namespace Kolejki3.Logika
             engTime = 0;
             double lastRandomTime = 0;
 
-            Console.Out.WriteLine(engTime); 
+            Console.Out.WriteLine(engTime);
+            Simulating = true;
+            BackgroundWorker bw = new BackgroundWorker();
             while (engTime < stopTime)
             {
                //losuj nowe zdarzenie (czyli zadanie do wykonania) i dodaj na koniec listy komunikatów
@@ -78,14 +85,15 @@ namespace Kolejki3.Logika
                 listRequest.RemoveAt(0);
                     //posortowanie list komunikatów, aby najwcześniejsze było na pierwszym miejscu              
                 listRequest.Sort(CompareRequestsByTime);
+                //wyświetlanie komunikatów
+                if (OnProgressUpdate != null)
+                    {
+                    OnProgressUpdate(stats, "do obliczenia");
+                    }
 
-                    //wyświetlanie komunikatów
-                MainForm.akcjeBox.DataSource = null;
-                MainForm.akcjeBox.DataSource = stats;
-                MainForm.akcjeBox.DisplayMember = "Out";
-                calculateStats();
                 Console.Out.WriteLine(engTime); 
-                Thread.Sleep(1000);         //  <-----  może usunąć?
+                 Thread.Sleep(1000);         //  <-----  może usunąć?
+                 if (!Simulating) break;
             }
         }
 
@@ -203,24 +211,6 @@ namespace Kolejki3.Logika
                 newRequest(engTime, "odrzucone z systemu", z.ID, ((Modul)k.getKontekst()));
             }
         }
-
-        private void calculateStats()
-            {
-
-            foreach (Komunikat k in stats)
-                {
-                // jak komunikaty wygeneruja sie az do zejscia z systemu to bedziemy mogli obliczyc statystyki
-                if (k.getRequestType() == "weszło do systemu")
-                    {
-                    Zdarzenie z = findRequestById(listEvents, k.getRequestId());
-
-                    }
-
-                }
-
-            MainForm.aio.Text = "do obliczenia";
-            MainForm.aqt.Text = "do obliczenia";
-            }
 
         private Modul findFirstModule()
         {
