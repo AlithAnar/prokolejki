@@ -101,8 +101,8 @@ namespace Kolejki3
             {
             SelectedModules++;
 
-                
-                ModulControl md = sender as ModulControl;
+            button4.Visible = true;
+            ModulControl md = sender as ModulControl;
             _lastId = _newId;
             _lastPoint = _newPoint;
             _newPoint = md.Location;
@@ -159,11 +159,6 @@ namespace Kolejki3
                 }
             }
 
-        private void button2_MouseClick(object sender, MouseEventArgs e)
-        {
-
-        }
-
         private void startEngine(List<Modul> lm, List<Zdarzenie> lz, List<Komunikat> lw)
             {
                 queuesEngine = new Engine(lm, lz, lw, float.Parse(textBoxMi.Text), this, float.Parse(textBoxLambda.Text));
@@ -194,6 +189,14 @@ namespace Kolejki3
         private void button3_Click(object sender, EventArgs e)
             {
             queuesEngine.Simulating = false;
+            }
+
+        private void button4_Click(object sender, EventArgs e)
+            {
+            ModulControl md = sender as ModulControl;
+            listaModulow.RemoveAt(_newId);
+            panelMain.Controls.RemoveAt(_newId);
+            button4.Visible = false;
             }
 
         }
