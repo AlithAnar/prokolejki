@@ -29,11 +29,10 @@
         private void InitializeComponent()
             {
             this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
+            this.lengthText = new System.Windows.Forms.Label();
+            this.currentInBuffer = new System.Windows.Forms.Label();
+            this.currentInMachine = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
             this.labeId = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
@@ -46,32 +45,32 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Maszyny:";
             // 
-            // label2
+            // lengthText
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(3, 26);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(84, 13);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Długość kolejki:";
+            this.lengthText.AutoSize = true;
+            this.lengthText.Location = new System.Drawing.Point(3, 26);
+            this.lengthText.Name = "lengthText";
+            this.lengthText.Size = new System.Drawing.Size(84, 13);
+            this.lengthText.TabIndex = 1;
+            this.lengthText.Text = "Długość kolejki:";
             // 
-            // label3
+            // currentInBuffer
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(3, 39);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(98, 13);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "Obecnie w kolejce:";
+            this.currentInBuffer.AutoSize = true;
+            this.currentInBuffer.Location = new System.Drawing.Point(3, 39);
+            this.currentInBuffer.Name = "currentInBuffer";
+            this.currentInBuffer.Size = new System.Drawing.Size(98, 13);
+            this.currentInBuffer.TabIndex = 2;
+            this.currentInBuffer.Text = "Obecnie w kolejce:";
             // 
-            // label4
+            // currentInMachine
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(3, 52);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(107, 13);
-            this.label4.TabIndex = 3;
-            this.label4.Text = "Obecnie w maszynie:";
+            this.currentInMachine.AutoSize = true;
+            this.currentInMachine.Location = new System.Drawing.Point(3, 52);
+            this.currentInMachine.Name = "currentInMachine";
+            this.currentInMachine.Size = new System.Drawing.Size(107, 13);
+            this.currentInMachine.TabIndex = 3;
+            this.currentInMachine.Text = "Obecnie w maszynie:";
             // 
             // label5
             // 
@@ -81,15 +80,6 @@
             this.label5.Size = new System.Drawing.Size(46, 13);
             this.label5.TabIndex = 4;
             this.label5.Text = "Reguła:";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(3, 78);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(19, 13);
-            this.label6.TabIndex = 5;
-            this.label6.Text = "M:";
             // 
             // labeId
             // 
@@ -108,15 +98,14 @@
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.Controls.Add(this.labeId);
-            this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
+            this.Controls.Add(this.currentInMachine);
+            this.Controls.Add(this.currentInBuffer);
+            this.Controls.Add(this.lengthText);
             this.Controls.Add(this.label1);
             this.Cursor = System.Windows.Forms.Cursors.Hand;
             this.Name = "ModulControl";
-            this.Size = new System.Drawing.Size(137, 93);
+            this.Size = new System.Drawing.Size(137, 87);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -125,11 +114,10 @@
         #endregion
 
         public System.Windows.Forms.Label label1;
-        public System.Windows.Forms.Label label2;
-        public System.Windows.Forms.Label label3;
-        public System.Windows.Forms.Label label4;
+        public System.Windows.Forms.Label lengthText;
+        public System.Windows.Forms.Label currentInBuffer;
+        public System.Windows.Forms.Label currentInMachine;
         public System.Windows.Forms.Label label5;
-        public System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label labeId;
 
         }

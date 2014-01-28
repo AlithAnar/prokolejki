@@ -183,7 +183,16 @@ namespace Kolejki3
                     this.akcjeBox.DataSource = null;
                     this.akcjeBox.DataSource = list;
                     this.akcjeBox.DisplayMember = "Out";
-                });
+                    //foreach (Control c in panelMain.Controls)
+                    //    {
+                    //    ModulControl m = (ModulControl)c;
+                    //    if (m.ID == id)
+                    //        {
+                    //        m.currentInBuffer.Text = inbuffer;
+                    //        m.currentInMachine.Text = inmachine;
+                    //        }
+                    //    }  
+                  });
             }
 
         private void button3_Click(object sender, EventArgs e)
@@ -198,6 +207,7 @@ namespace Kolejki3
             panelMain.Controls.RemoveAt(_newId);
             button4.Visible = false;
             }
+
 
         }
     }

@@ -26,6 +26,10 @@ namespace Kolejki3.Logika
 
         public delegate void ProgressUpdate(List<Komunikat> list, string tmp);
         public event ProgressUpdate OnProgressUpdate;
+        string avarageIO = "";
+        int eventsout = 0;
+
+
 
         public Engine(List<Modul> lm, List<Zdarzenie> lz, List<Komunikat> lw, float m, Form1 mf, float lambda)
         {
@@ -56,7 +60,6 @@ namespace Kolejki3.Logika
 
             Console.Out.WriteLine(engTime);
             Simulating = true;
-            BackgroundWorker bw = new BackgroundWorker();
             while (engTime < stopTime)
             {
                //losuj nowe zdarzenie (czyli zadanie do wykonania) i dodaj na koniec listy komunikatów
@@ -86,9 +89,10 @@ namespace Kolejki3.Logika
                     //posortowanie list komunikatów, aby najwcześniejsze było na pierwszym miejscu              
                 listRequest.Sort(CompareRequestsByTime);
                 //wyświetlanie komunikatów
+                updateStats();
                 if (OnProgressUpdate != null)
                     {
-                    OnProgressUpdate(stats, "do obliczenia");
+                    OnProgressUpdate(stats, avarageIO);
                     }
 
                 Console.Out.WriteLine(engTime); 
@@ -96,6 +100,28 @@ namespace Kolejki3.Logika
                  if (!Simulating) break;
             }
         }
+
+        private void updateStats()
+            {
+            double sum=0;
+            foreach (Komunikat ko in stats)
+                {
+                if (ko.getRequestType() == "wyszło z systemu")
+                    {
+                    double outtime = ko.getRequestTime();
+                    int id = ko.getRequestId();
+                    Komunikat ki = stats.First(x => x.getRequestId() == id && x.getRequestType() == "weszło do systemu");
+                    if (ki != null)
+                        {
+                        sum += outtime - ki.getRequestTime();
+                        }
+                    }
+                   
+                }
+            if(eventsout!=0)
+            sum = sum / eventsout;
+            avarageIO = sum.ToString();
+            }
 
         private double getLastEventIncomingTime()
         {
@@ -163,8 +189,10 @@ namespace Kolejki3.Logika
 
         private void wyszloZSystemu(Zdarzenie z)
             {
+            eventsout++;
                 //czyszczę listę zdarzeń, gdy zdarzenie skończy swój cykl życia
                 listEvents.Remove(z);
+           
             }
 
         private void zeszloZMaszyny(Zdarzenie z, Komunikat k)
