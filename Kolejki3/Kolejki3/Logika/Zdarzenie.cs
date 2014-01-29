@@ -49,7 +49,7 @@ namespace Kolejki3.Logika
         private double random(double alfa)
         {
             double x = randomGenerator.NextDouble();
-            return -(1 / alfa) * Math.Log(1 - x);
+            return -(alfa) * Math.Log(1 - x);
         }
 
         public double randomTime(double alfa) 

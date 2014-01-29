@@ -150,10 +150,10 @@ namespace Kolejki3.Logika
 
 
                 //sum = sum / stats.Count;
-            if (listEvents.Count != 0)
-                avarageInBuffer = (queueTime / (double)listEvents.Count).ToString();
+            if (eventsout != 0)
+                avarageInBuffer = (queueTime / (double)eventsout).ToString();
                     Console.WriteLine(queueTime + " / " + (double)listEvents.Count + " = " + avarageInBuffer);
-                double t = ((double)eventsrejected / (double)listEvents.Count);
+                double t = Math.Abs( 1 - ((double)eventsrejected / (double)eventsout) );
                 double t2 = t * L;
                 absolutePerformance = t.ToString();
                 relativePerformance = t2.ToString();
