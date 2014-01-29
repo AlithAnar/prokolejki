@@ -163,16 +163,16 @@ namespace Kolejki3
             {
                 queuesEngine = new Engine(lm, lz, lw, float.Parse(textBoxMi.Text), this, float.Parse(textBoxLambda.Text));
             
-                if (pomButtonClickCount < 1)
-                {
+                //if (pomButtonClickCount < 1)
+                //{
                     //queuesEngine.run(100);          // <--- tu ustaw czas zakończenia symulacji.
-                queuesEngine._END_MODUL = 1; // jesli ma być tylko jeden moduł
-                //    queuesEngine._END_MODUL = 2; // jeśli mają być dwa moduły
+                //queuesEngine._END_MODUL = 1; // jesli ma być tylko jeden moduł
+                    queuesEngine._END_MODUL = listaModulow.Count-1; // jeśli mają być dwa moduły
                     queuesEngine.OnProgressUpdate+=queuesEngine_OnProgressUpdate;
                 backgroundWorker1.RunWorkerAsync();
                     
                    // queuesEngine.run(50);          // <--- tu ustaw czas zakończenia symulacji.
-                }
+                //}
             
                 pomButtonClickCount++;
                 Console.Out.WriteLine("count: " + pomButtonClickCount);
@@ -235,6 +235,18 @@ namespace Kolejki3
             listaModulow.RemoveAt(_newId);
             panelMain.Controls.RemoveAt(_newId);
             button4.Visible = false;
+            }
+
+        private void button5_Click(object sender, EventArgs e)
+            {
+            listaModulow = new List<Modul>();
+            listaWydarzen = new List<Komunikat>();
+            listaZdarzen = new List<Zdarzenie>();
+            panelMain.Controls.Clear();
+            panelMain.Invalidate();
+            listBox1.Items.Clear();
+            akcjeBox.DataSource = null;
+            queuesEngine = null;
             }
 
 

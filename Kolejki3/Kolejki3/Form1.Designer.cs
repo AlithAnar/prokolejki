@@ -52,6 +52,8 @@
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.relativePerf = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
             this.absPerf = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.avarageLength = new System.Windows.Forms.TextBox();
@@ -63,8 +65,7 @@
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
-            this.relativePerf = new System.Windows.Forms.TextBox();
-            this.label11 = new System.Windows.Forms.Label();
+            this.button5 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -315,6 +316,22 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Statystyki";
             // 
+            // relativePerf
+            // 
+            this.relativePerf.Location = new System.Drawing.Point(119, 149);
+            this.relativePerf.Name = "relativePerf";
+            this.relativePerf.Size = new System.Drawing.Size(74, 20);
+            this.relativePerf.TabIndex = 9;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(6, 152);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(84, 13);
+            this.label11.TabIndex = 8;
+            this.label11.Text = "Wydajnosc wzgl";
+            // 
             // absPerf
             // 
             this.absPerf.Location = new System.Drawing.Point(120, 116);
@@ -400,27 +417,22 @@
             this.button4.Visible = false;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
-            // relativePerf
+            // button5
             // 
-            this.relativePerf.Location = new System.Drawing.Point(119, 149);
-            this.relativePerf.Name = "relativePerf";
-            this.relativePerf.Size = new System.Drawing.Size(74, 20);
-            this.relativePerf.TabIndex = 9;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(6, 152);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(84, 13);
-            this.label11.TabIndex = 8;
-            this.label11.Text = "Wydajnosc wzgl";
+            this.button5.Location = new System.Drawing.Point(670, 32);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(95, 23);
+            this.button5.TabIndex = 18;
+            this.button5.Text = "Reset systemu";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(996, 580);
+            this.Controls.Add(this.button5);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.groupBox3);
@@ -490,6 +502,7 @@
         private System.Windows.Forms.Label label10;
         public System.Windows.Forms.TextBox relativePerf;
         private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Button button5;
         }
     }
 

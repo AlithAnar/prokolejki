@@ -196,10 +196,11 @@ namespace Kolejki3.Logika
         private void sprawdzenieKolejnegoModulu(Zdarzenie z, Komunikat k)
         {// TODO wiele maszyn
             Modul futureModule = ((Modul)k.getKontekst()).listConnections.randomConnection().ModulOut;
-
+            Console.WriteLine("sprawdzam modul " + futureModule.ID);
             //czy moduł na który chce przejść zadanie po wykonaniu się na maszynie jest już poza systemem (_END_MODUL)
             if (futureModule.ID == _END_MODUL)
             {
+            Console.WriteLine("future: " + futureModule.ID + " = " + _END_MODUL );
                 newRequest(engTime, "zeszło z maszyny", z.ID, ((Modul)k.getKontekst()));
                 newRequest(engTime, "wyszło z systemu", z.ID, ((Modul)k.getKontekst()));
                 return;
