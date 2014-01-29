@@ -56,8 +56,6 @@
             this.label11 = new System.Windows.Forms.Label();
             this.absPerf = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
-            this.avarageLength = new System.Windows.Forms.TextBox();
-            this.label9 = new System.Windows.Forms.Label();
             this.aqt = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.aio = new System.Windows.Forms.TextBox();
@@ -89,7 +87,7 @@
             this.textBoxLambda.Name = "textBoxLambda";
             this.textBoxLambda.Size = new System.Drawing.Size(41, 20);
             this.textBoxLambda.TabIndex = 1;
-            this.textBoxLambda.Text = "1";
+            this.textBoxLambda.Text = "0,0083";
             // 
             // akcjeBox
             // 
@@ -179,7 +177,7 @@
             this.textBoxMi.Name = "textBoxMi";
             this.textBoxMi.Size = new System.Drawing.Size(41, 20);
             this.textBoxMi.TabIndex = 15;
-            this.textBoxMi.Text = "1";
+            this.textBoxMi.Text = "0,0167";
             // 
             // label6
             // 
@@ -303,8 +301,6 @@
             this.groupBox3.Controls.Add(this.label11);
             this.groupBox3.Controls.Add(this.absPerf);
             this.groupBox3.Controls.Add(this.label10);
-            this.groupBox3.Controls.Add(this.avarageLength);
-            this.groupBox3.Controls.Add(this.label9);
             this.groupBox3.Controls.Add(this.aqt);
             this.groupBox3.Controls.Add(this.label8);
             this.groupBox3.Controls.Add(this.aio);
@@ -347,22 +343,6 @@
             this.label10.Size = new System.Drawing.Size(101, 13);
             this.label10.TabIndex = 6;
             this.label10.Text = "Wydajnosc bezwzgl";
-            // 
-            // avarageLength
-            // 
-            this.avarageLength.Location = new System.Drawing.Point(120, 90);
-            this.avarageLength.Name = "avarageLength";
-            this.avarageLength.Size = new System.Drawing.Size(74, 20);
-            this.avarageLength.TabIndex = 5;
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(7, 93);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(102, 13);
-            this.label9.TabIndex = 4;
-            this.label9.Text = "Średnia długość kol";
             // 
             // aqt
             // 
@@ -496,8 +476,6 @@
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
-        public System.Windows.Forms.TextBox avarageLength;
-        private System.Windows.Forms.Label label9;
         public System.Windows.Forms.TextBox absPerf;
         private System.Windows.Forms.Label label10;
         public System.Windows.Forms.TextBox relativePerf;

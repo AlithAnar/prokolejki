@@ -168,6 +168,7 @@ namespace Kolejki3
                     //queuesEngine.run(100);          // <--- tu ustaw czas zakończenia symulacji.
                 //queuesEngine._END_MODUL = 1; // jesli ma być tylko jeden moduł
                     queuesEngine._END_MODUL = listaModulow.Count-1; // jeśli mają być dwa moduły
+                    ((ModulControl)panelMain.Controls[queuesEngine._END_MODUL]).end();
                     queuesEngine.OnProgressUpdate+=queuesEngine_OnProgressUpdate;
                 backgroundWorker1.RunWorkerAsync();
                     
@@ -182,23 +183,14 @@ namespace Kolejki3
             {
             base.Invoke((Action)delegate
                 {
-                    this.aqt.Text = s1;
-                    this.aio.Text = s2;
-                    this.avarageLength.Text = "0";
+                    this.aqt.Text = s2;
+                    this.aio.Text = s1;
                     this.absPerf.Text = s3;
                     this.relativePerf.Text = s4;
                     this.akcjeBox.DataSource = null;
                     this.akcjeBox.DataSource = list;
                     this.akcjeBox.DisplayMember = "Out";
-                    //foreach (Control c in panelMain.Controls)
-                    //    {
-                    //    ModulControl m = (ModulControl)c;
-                    //    if (m.ID == id)
-                    //        {
-                    //        m.currentInBuffer.Text = inbuffer;
-                    //        m.currentInMachine.Text = inmachine;
-                    //        }
-                    //    }  
+
 
                     for (int i = 0; i < listaModulow.Count; i++)
                         {

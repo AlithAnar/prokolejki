@@ -32,7 +32,7 @@ namespace Kolejki3.Logika
         string relativePerformance = "";
         int eventsout = 0;
         int eventsrejected = 0;
-
+        double queueTime = 0;
 
 
         public Engine(List<Modul> lm, List<Zdarzenie> lz, List<Komunikat> lw, float m, Form1 mf, float lambda)
@@ -60,6 +60,7 @@ namespace Kolejki3.Logika
             Komunikat helpyRequest;
             Zdarzenie helpyEvent;
             engTime = 0;
+            double t1 = 0;
             double lastRandomTime = 0;
 
             Console.Out.WriteLine(engTime); 
@@ -67,6 +68,7 @@ namespace Kolejki3.Logika
             // while (engTime < stopTime)
             while (true)
             {
+            t1 = engTime;
                //losuj nowe zdarzenie (czyli zadanie do wykonania) i dodaj na koniec listy komunikatów
                 newRandomEvent(listEvents, lastRandomTime);
                     //zapamiętaj wylosowany czas ostatniego zdarzenia (na jego podstawie jest losowaney czas pojawienia się kolejnego zadania)
@@ -77,6 +79,8 @@ namespace Kolejki3.Logika
                 helpyEvent = findRequestById(listEvents, helpyRequest.getRequestId());
                 //uaktualnij czas, czyli z komunikatu przeczytaj czas
                 engTime = helpyRequest.getRequestTime();
+                queueTime+=Math.Abs(t1-engTime);
+                //Console.WriteLine(" queue time " + (t1 - engTime));
                 //zareaguj na komunikat (jesli weszło do sytemu to przenieś do modułu, 
                 //jesli weszło do kolejki do daj do maszyny, 
                 //jeśli jest w maszynie do wyjmij z modułu), każda reakcja generuje komunikat. 
@@ -103,7 +107,7 @@ namespace Kolejki3.Logika
                     }
 
                 Console.Out.WriteLine(engTime); 
-                Thread.Sleep(1000);         //  <-----  może usunąć?
+                //Thread.Sleep(100);         //  <-----  może usunąć?
                 if (!Simulating) break;
                 }
             }
@@ -126,32 +130,34 @@ namespace Kolejki3.Logika
 
                 }
             if (eventsout != 0)
-                sum = sum / eventsout;
+                sum = sum / (double)eventsout;
             avarageIO = sum.ToString();
 
-            foreach (Komunikat ko in stats)
-                {
-                if (ko.getRequestType() == "zeszło z bufora")
-                    {
-                    double outtime = ko.getRequestTime();
-                    int id = ko.getRequestId();
-                    Komunikat ki = stats.First(x => x.getRequestId() == id && x.getRequestType() == "weszło do bufora");
-                    if (ki != null)
-                        {
-                        sum += outtime - ki.getRequestTime();
-            }
-        }
+            //foreach (Komunikat ko in stats)
+            //    {
+            //    if (ko.getRequestType() == "zeszło z bufora")
+            //        {
+            //        double outtime = ko.getRequestTime();
+            //        int id = ko.getRequestId();
+            //        Komunikat ki = stats.First(x => x.getRequestId() == id && x.getRequestType() == "weszło do bufora");
+            //        if (ki != null)
+            //            {
+            //            sum += outtime - ki.getRequestTime();
+            //            }
+            //        }
 
-                }
+            //    }
+
+
+                //sum = sum / stats.Count;
             if (listEvents.Count != 0)
-                {
-                sum = sum / listEvents.Count;
-                avarageInBuffer = sum.ToString();
+                avarageInBuffer = (queueTime / (double)listEvents.Count).ToString();
+                    Console.WriteLine(queueTime + " / " + (double)listEvents.Count + " = " + avarageInBuffer);
                 double t = ((double)eventsrejected / (double)listEvents.Count);
                 double t2 = t * L;
                 absolutePerformance = t.ToString();
                 relativePerformance = t2.ToString();
-                }
+                
             }
 
         private double getLastEventIncomingTime()
@@ -200,7 +206,6 @@ namespace Kolejki3.Logika
             //czy moduł na który chce przejść zadanie po wykonaniu się na maszynie jest już poza systemem (_END_MODUL)
             if (futureModule.ID == _END_MODUL)
             {
-            Console.WriteLine("future: " + futureModule.ID + " = " + _END_MODUL );
                 newRequest(engTime, "zeszło z maszyny", z.ID, ((Modul)k.getKontekst()));
                 newRequest(engTime, "wyszło z systemu", z.ID, ((Modul)k.getKontekst()));
                 return;
@@ -240,7 +245,7 @@ namespace Kolejki3.Logika
             // TODO czy to działa?
             foreach (Modul m in listModules)
             {
-                if(m.isWaiting())
+                if (m.isWaiting())
                 {
                     m.stopWaiting();
                     newRequest(engTime, "sprawdzenie kolejnego modułu", m.getWaitingEventID(), ((Modul)k.getKontekst()));
