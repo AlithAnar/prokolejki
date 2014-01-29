@@ -55,7 +55,7 @@ namespace Kolejki3.Logika
            
         }
 
-        internal void run(int stopTime)
+        internal void run(int tick)
         {
             Komunikat helpyRequest;
             Zdarzenie helpyEvent;
@@ -107,14 +107,14 @@ namespace Kolejki3.Logika
                     }
 
                 Console.Out.WriteLine(engTime); 
-                //Thread.Sleep(100);         //  <-----  może usunąć?
+                Thread.Sleep(tick);         //  <-----  może usunąć?
                 if (!Simulating) break;
                 }
             }
 
         private void updateStats()
             {
-            double sum = 0;
+            double sum = 0, sum2=0;
             foreach (Komunikat ko in stats)
                 {
                 if (ko.getRequestType() == "wyszło z systemu")
@@ -128,36 +128,32 @@ namespace Kolejki3.Logika
                         }
                     }
 
+                if (ko.getRequestType() == "zeszło z bufora")
+                    {
+                    double outtime = ko.getRequestTime();
+                    int id = ko.getRequestId();
+                    Komunikat ki = stats.First(x => x.getRequestId() == id && x.getRequestType() == "weszło do bufora");
+                    if (ki != null)
+                        {
+                        sum2 += outtime - ki.getRequestTime();
+                        }
+                    }
+
                 }
+
             if (eventsout != 0)
+                {
                 sum = sum / (double)eventsout;
-            avarageIO = sum.ToString();
-
-            //foreach (Komunikat ko in stats)
-            //    {
-            //    if (ko.getRequestType() == "zeszło z bufora")
-            //        {
-            //        double outtime = ko.getRequestTime();
-            //        int id = ko.getRequestId();
-            //        Komunikat ki = stats.First(x => x.getRequestId() == id && x.getRequestType() == "weszło do bufora");
-            //        if (ki != null)
-            //            {
-            //            sum += outtime - ki.getRequestTime();
-            //            }
-            //        }
-
-            //    }
-
-
-                //sum = sum / stats.Count;
-            if (eventsout != 0)
-                avarageInBuffer = (queueTime / (double)eventsout).ToString();
-                    Console.WriteLine(queueTime + " / " + (double)listEvents.Count + " = " + avarageInBuffer);
+                sum2 = sum2 / (double)eventsout;
+                avarageInBuffer = sum2.ToString();
+                avarageIO = sum.ToString();
+               // avarageInBuffer = (queueTime / (double)eventsout).ToString();
+                   
                 double t = Math.Abs( 1 - ((double)eventsrejected / (double)eventsout) );
-                double t2 = t * L;
+                double t2 = t * (1/L);
                 absolutePerformance = t.ToString();
                 relativePerformance = t2.ToString();
-                
+                }                
             }
 
         private double getLastEventIncomingTime()

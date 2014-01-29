@@ -29,13 +29,12 @@ namespace Kolejki3
             InitializeComponent();
             listaModulow = new List<Modul>();
             SelectedModules = 0;
-             backgroundWorker1.DoWork+=backgroundWorker1_DoWork;
-             backgroundWorker1.WorkerSupportsCancellation = true;
+            backgroundWorker1.WorkerSupportsCancellation = true;
             }
 
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
             {
-            queuesEngine.run(100);
+            queuesEngine.run((int)numericUpDown1.Value);
             }
             
         private void simStart(object sender, EventArgs e)
@@ -161,6 +160,17 @@ namespace Kolejki3
 
         private void startEngine(List<Modul> lm, List<Zdarzenie> lz, List<Komunikat> lw)
             {
+            
+            listaWydarzen = new List<Komunikat>();
+            listaZdarzen = new List<Zdarzenie>();
+            akcjeBox.DataSource = null;
+            backgroundWorker1.CancelAsync();
+            backgroundWorker1 = new BackgroundWorker();
+            backgroundWorker1.DoWork += backgroundWorker1_DoWork;
+            backgroundWorker1.WorkerSupportsCancellation = true;
+           
+           
+           
                 queuesEngine = new Engine(lm, lz, lw, float.Parse(textBoxMi.Text), this, float.Parse(textBoxLambda.Text));
             
                 //if (pomButtonClickCount < 1)
@@ -239,6 +249,11 @@ namespace Kolejki3
             listBox1.Items.Clear();
             akcjeBox.DataSource = null;
             queuesEngine = null;
+            }
+
+        private void label11_Click(object sender, EventArgs e)
+            {
+
             }
 
 

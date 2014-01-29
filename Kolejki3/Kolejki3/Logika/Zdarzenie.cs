@@ -51,11 +51,13 @@ namespace Kolejki3.Logika
             double x = randomGenerator.NextDouble();
             return -(alfa) * Math.Log(1 - x);
         }
-
+        
         public double randomTime(double alfa) 
             {
-                timeIncoming = Math.Abs( random(alfa) );
-                return timeIncoming;
+            
+               // timeIncoming = Math.Abs( random(alfa) );
+            timeIncoming = alfa * (-Math.Log(1 - randomGenerator.NextDouble()));
+            return timeIncoming;
             }
 
         }

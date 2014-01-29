@@ -64,12 +64,16 @@
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
+            this.label9 = new System.Windows.Forms.Label();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.label12 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMachineCount)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownQueueSize)).BeginInit();
             this.groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -87,7 +91,7 @@
             this.textBoxLambda.Name = "textBoxLambda";
             this.textBoxLambda.Size = new System.Drawing.Size(41, 20);
             this.textBoxLambda.TabIndex = 1;
-            this.textBoxLambda.Text = "0,0083";
+            this.textBoxLambda.Text = "120";
             // 
             // akcjeBox
             // 
@@ -177,16 +181,16 @@
             this.textBoxMi.Name = "textBoxMi";
             this.textBoxMi.Size = new System.Drawing.Size(41, 20);
             this.textBoxMi.TabIndex = 15;
-            this.textBoxMi.Text = "0,0167";
+            this.textBoxMi.Text = "60";
             // 
             // label6
             // 
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(2, 59);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(19, 13);
+            this.label6.Size = new System.Drawing.Size(16, 13);
             this.label6.TabIndex = 11;
-            this.label6.Text = "M:";
+            this.label6.Text = "μ:";
             // 
             // groupBox2
             // 
@@ -322,11 +326,12 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(6, 152);
+            this.label11.Location = new System.Drawing.Point(7, 123);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(84, 13);
             this.label11.TabIndex = 8;
             this.label11.Text = "Wydajnosc wzgl";
+            this.label11.Click += new System.EventHandler(this.label11_Click);
             // 
             // absPerf
             // 
@@ -338,7 +343,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(7, 119);
+            this.label10.Location = new System.Drawing.Point(7, 152);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(101, 13);
             this.label10.TabIndex = 6;
@@ -407,11 +412,44 @@
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(791, 33);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(47, 13);
+            this.label9.TabIndex = 19;
+            this.label9.Text = "Skok co";
+            // 
+            // numericUpDown1
+            // 
+            this.numericUpDown1.Location = new System.Drawing.Point(844, 31);
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Size = new System.Drawing.Size(53, 20);
+            this.numericUpDown1.TabIndex = 20;
+            this.numericUpDown1.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(905, 33);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(20, 13);
+            this.label12.TabIndex = 21;
+            this.label12.Text = "ms";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(996, 580);
+            this.Controls.Add(this.label12);
+            this.Controls.Add(this.numericUpDown1);
+            this.Controls.Add(this.label9);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
@@ -438,6 +476,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownQueueSize)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -481,6 +520,9 @@
         public System.Windows.Forms.TextBox relativePerf;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.Label label12;
         }
     }
 
