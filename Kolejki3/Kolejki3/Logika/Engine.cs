@@ -246,7 +246,6 @@ namespace Kolejki3.Logika
                     newRequest(engTime, "sprawdzenie kolejnego modułu", m.getWaitingEventID(), ((Modul)k.getKontekst()));
                 }
             }
-            Console.Out.WriteLine("TAMTAmTAMTAMTAM"); 
             
         }
         private void weszloDoBufora(Zdarzenie z, Komunikat k)
