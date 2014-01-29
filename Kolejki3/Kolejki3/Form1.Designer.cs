@@ -79,15 +79,15 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 33);
+            this.label1.Location = new System.Drawing.Point(6, 18);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(12, 13);
+            this.label1.Size = new System.Drawing.Size(182, 13);
             this.label1.TabIndex = 0;
-            this.label1.Text = "λ";
+            this.label1.Text = "Średni czas przychodzenia zgłoszeń:";
             // 
             // textBoxLambda
             // 
-            this.textBoxLambda.Location = new System.Drawing.Point(24, 30);
+            this.textBoxLambda.Location = new System.Drawing.Point(102, 34);
             this.textBoxLambda.Name = "textBoxLambda";
             this.textBoxLambda.Size = new System.Drawing.Size(41, 20);
             this.textBoxLambda.TabIndex = 1;
@@ -98,9 +98,9 @@
             this.akcjeBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.akcjeBox.FormattingEnabled = true;
-            this.akcjeBox.Location = new System.Drawing.Point(781, 246);
+            this.akcjeBox.Location = new System.Drawing.Point(781, 237);
             this.akcjeBox.Name = "akcjeBox";
-            this.akcjeBox.Size = new System.Drawing.Size(203, 316);
+            this.akcjeBox.Size = new System.Drawing.Size(195, 290);
             this.akcjeBox.TabIndex = 4;
             // 
             // menuStrip1
@@ -110,7 +110,7 @@
             this.plikToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(996, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(988, 24);
             this.menuStrip1.TabIndex = 7;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -148,7 +148,7 @@
             this.panelMain.BackColor = System.Drawing.Color.Linen;
             this.panelMain.Location = new System.Drawing.Point(203, 62);
             this.panelMain.Name = "panelMain";
-            this.panelMain.Size = new System.Drawing.Size(562, 500);
+            this.panelMain.Size = new System.Drawing.Size(562, 477);
             this.panelMain.TabIndex = 8;
             // 
             // button1
@@ -177,7 +177,7 @@
             // 
             // textBoxMi
             // 
-            this.textBoxMi.Location = new System.Drawing.Point(24, 56);
+            this.textBoxMi.Location = new System.Drawing.Point(102, 59);
             this.textBoxMi.Name = "textBoxMi";
             this.textBoxMi.Size = new System.Drawing.Size(41, 20);
             this.textBoxMi.TabIndex = 15;
@@ -188,9 +188,9 @@
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(2, 59);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(16, 13);
+            this.label6.Size = new System.Drawing.Size(97, 13);
             this.label6.TabIndex = 11;
-            this.label6.Text = "μ:";
+            this.label6.Text = "Średni czas osługi:";
             // 
             // groupBox2
             // 
@@ -446,7 +446,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(996, 580);
+            this.ClientSize = new System.Drawing.Size(988, 551);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.numericUpDown1);
             this.Controls.Add(this.label9);
