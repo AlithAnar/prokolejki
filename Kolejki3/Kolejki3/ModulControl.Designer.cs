@@ -34,6 +34,7 @@
             this.currentInMachine = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.labeId = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -90,6 +91,17 @@
             this.labeId.TabIndex = 10;
             this.labeId.Text = "ID: ";
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label2.Location = new System.Drawing.Point(16, 30);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(118, 25);
+            this.label2.TabIndex = 11;
+            this.label2.Text = "MAGAZYN";
+            this.label2.Visible = false;
+            // 
             // ModulControl
             // 
             this.AllowDrop = true;
@@ -97,6 +109,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.labeId);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.currentInMachine);
@@ -119,6 +132,7 @@
         public System.Windows.Forms.Label currentInMachine;
         public System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label labeId;
+        private System.Windows.Forms.Label label2;
 
         }
     }

@@ -35,6 +35,16 @@ namespace Kolejki3
             labeId.Text = "ID: " + _modul.ID;
             }
 
+        public void end()
+            {
+            label1.Visible = false;
+            lengthText.Visible = false;
+            currentInBuffer.Visible = false;
+            currentInMachine.Visible = false;
+            label5.Visible = false;
+            labeId.Visible = false;
+            label2.Visible = true;
+            }
 
         }
     }
